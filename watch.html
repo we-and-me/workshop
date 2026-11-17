@@ -233,6 +233,7 @@
         <div><b>Connection Toolkit</b><span>Two decks, the roadmap, the book and playmeo access.</span></div>
         <div class="amt p">$197</div>
       </div>
+      <p class="d-live" id="drawerLive" hidden>Workshop bonuses disappear in <b data-count="bonus">25:00</b></p>
       <div class="dbonus" id="drawerBonus"></div>
     </div>
     <footer>
@@ -295,7 +296,7 @@
   }
   $('reopen').addEventListener('click', function(){ LS.set('ws_replay', '1'); LS.set('ws_window', String(Date.now())); location.reload(); });
   if(!windowOpen()) showClosed();
-  else WS.countdown('watch', function(){ if(!document.body.classList.contains('revealed') && !bonusOn) $('winPill').textContent = started ? 'Window closed, finish watching' : 'Window closed'; if(!started) showClosed(); });
+  else WS.countdown('watch', function(){ if(!document.body.classList.contains('revealed')) $('winPill').textContent = started ? 'Window closed, finish watching' : 'Window closed'; if(!started) showClosed(); });
 
   /* ----- prices, value stack, bonuses ----- */
   document.querySelectorAll('.p').forEach(function(e){ e.textContent = money(C.price); });
@@ -318,7 +319,8 @@
       $('stickyLive').textContent = 'Workshop bonuses expired'; $('finalLive').textContent = 'The workshop bonuses have expired.';
       $('nowLine').textContent = 'The workshop bonuses have expired. The Toolkit and masterclass are still';
       $('totalValue').textContent = money(total - bonusTotal); document.querySelectorAll('.tv').forEach(function(e){ e.textContent = money(total - bonusTotal); });
-      if(bonusOn) $('winPill').textContent = 'Workshop bonuses have ended';
+      if(revealed) $('winPill').textContent = 'Workshop bonuses have ended';
+      $('drawerLive').textContent = 'The workshop bonuses have expired.';
     }
     var side = '', drawer = '';
     C.stack.forEach(function(s){ if(!s.bonus) return; var live = on || s.keep;
@@ -443,13 +445,16 @@
     if(bonusOn || closed) return; bonusOn = true;
     if(!WS.bonusDeadline()) track('BonusClockStarted');
     WS.startBonusClock();
-    // the top-right timer switches from the viewing window to the bonus deadline
-    $('winPill').classList.add('bonus'); $('winPill').innerHTML = gift + 'Bonuses disappear in <b data-count="bonus">' + mmss(Math.max(0, WS.bonusDeadline() - Date.now()) / 1000) + '</b>';
+    // the clock runs quietly from 0:24; it only shows inside the order panel until the 11:10 reveal
+    $('drawerLive').hidden = false;
     paintBonus(); WS.countdown('bonus', paintBonus);
   }
   function reveal(announce){
     if(revealed || closed) return; revealed = true; LS.set('ws_revealed', '1');
     startBonus();
+    // at the reveal the top-right timer switches from the viewing window to the bonus deadline
+    if(bonusActive()){ $('winPill').classList.add('bonus'); $('winPill').innerHTML = gift + 'Bonuses disappear in <b data-count="bonus">' + mmss(Math.max(0, WS.bonusDeadline() - Date.now()) / 1000) + '</b>'; }
+    else $('winPill').textContent = 'Workshop bonuses have ended';
     $('earlyKit').hidden = true;
     $('kitcard').classList.add('show'); $('offer').classList.add('show'); document.body.classList.add('has-sticky', 'revealed');
     tuck(announce);

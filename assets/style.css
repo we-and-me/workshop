@@ -799,3 +799,7 @@ body.bonus-expired .sbonus{border-color:#B9B9BF;background:var(--pale-gray)}
 .wf-quote blockquote b{font-weight:700}
 .wf-quote img{width:140px;margin-top:20px;filter:grayscale(1) brightness(.35)}
 @media(max-width:760px){.wforbes{grid-template-columns:1fr;gap:24px;padding:22px;text-align:center}.wf-quote img{margin:18px auto 0}}
+/* v13: bonus countdown inside the order panel (the clock runs from 0:24, shown here before the 11:10 reveal) */
+.d-live{margin:16px 0 8px;text-align:center;font-size:.95rem;color:var(--text);font-weight:700}
+.d-live b{color:var(--purple);font-variant-numeric:tabular-nums}
+.d-live[hidden]{display:none}
