@@ -55,7 +55,7 @@ window.WORKSHOP = {
     show: true,
     variantId: "41600240648326",   // Effortless Engagement Kit
     title: "The Effortless Engagement Kit",
-    price: 497,                    // regular store price; CHAD: set a workshop-only price + code if you want one
+    price: 497,                    // regular store price
     discountCode: "",
     // Struck-through "Valued at" figure. Only values stated on the store listing:
     // Connection Toolkit $197 + playmeo $117 + both masterclasses $1,394 = $1,708 (the other items have no listed value).
