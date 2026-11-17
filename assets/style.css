@@ -779,3 +779,15 @@ body.bonus-expired .sbonus{border-color:#B9B9BF;background:var(--pale-gray)}
 /* v11: top quiet pill has no icon and is longer on desktop */
 .early-kit.wide{justify-content:center}
 @media (min-width:561px){.early-kit.wide{min-width:240px;padding:9px 28px}}
+/* v12: confirm page, learnings card and a square timer card side by side so the calendar box sits higher */
+.duo{display:grid;grid-template-columns:1fr 210px;gap:18px;margin-top:30px;align-items:stretch}
+.duo .lpreview,.duo .window{margin:0}
+.duo .lpreview{padding:20px 20px}
+.duo .window{flex-direction:column;justify-content:center;text-align:center;gap:14px;padding:22px 18px}
+.duo .window p{font-size:1rem}
+.duo .clock span{font-size:2.6rem}
+.confirm .tick{width:68px;height:68px;margin-bottom:16px}
+.confirm .tick svg{width:34px;height:34px}
+.confirm .btn.big{margin-top:22px}
+.duo + .later{margin-top:18px}
+@media(max-width:700px){.duo{grid-template-columns:1fr}}
