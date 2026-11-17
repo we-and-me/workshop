@@ -805,3 +805,7 @@ body.bonus-expired .sbonus{border-color:#B9B9BF;background:var(--pale-gray)}
 .d-live[hidden]{display:none}
 /* v13: the white border was inside the 16:9 box, so the video area was slightly too wide and YouTube added thin black side bars */
 .player{box-sizing:content-box}
+/* v14: make the order panel bonus countdown easy to spot */
+.d-live{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 10px;padding:12px 16px;background:var(--pale-purple,#F6F0F7);border:2px solid var(--purple);border-radius:14px;text-align:left;color:var(--purple);font-weight:700;font-size:1rem}
+.d-live b{font-family:var(--head);font-size:1.7rem;line-height:1;color:var(--purple);font-variant-numeric:tabular-nums}
+body.bonus-expired .d-live{background:var(--pale-gray,#F2F1F3);border-color:#ccc;color:var(--text);justify-content:center}
