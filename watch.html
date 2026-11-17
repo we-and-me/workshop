@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Connection Before Content Workshop</title>
+<link rel="icon" href="assets/master-green-sm.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="watch-bg">
+  <div class="top" style="max-width:1280px">
+    <span class="pill"><i></i><span id="hello"><span class="long">Your workshop is live</span><span class="short">Live</span></span></span>
+    <span class="pill preview-tag" id="pvTag" hidden title="Drag the video bar to skip around">Preview mode</span>
+    <span class="pill quiet" id="winPill">Open for <b data-count="watch">60:00</b> more</span>
+  </div>
+
+  <!-- shown instead of the room when this person's viewing window has passed -->
+  <main class="wrap closed" id="closed" hidden>
+    <div class="confirm">
+      <h1>Your viewing window has closed.</h1>
+      <p class="lede">This workshop stays open for one hour after you sign up, so it gets watched instead of saved for someday.</p>
+      <div id="closedOnce">
+        <p style="margin-top:14px">If life got in the way, you can open it one more time. The hour starts when you press the button.</p>
+        <button class="btn big" id="reopen" type="button" style="max-width:460px;margin:26px auto 0">Open one more viewing</button>
+      </div>
+      <div id="closedDone" hidden>
+        <p style="margin-top:14px">You’ve used your extra viewing. The Connection Toolkit is always available on our store.</p>
+        <a class="btn big" href="https://shop.weand.me/products/connection-toolkit" style="max-width:460px;margin:26px auto 0">See the Connection Toolkit</a>
+      </div>
+    </div>
+  </main>
+
+  <main class="wrap room-wrap" id="room">
+    <div class="watch-head">
+      <h1>Connection Before Content Workshop</h1>
+      <p class="lede">A miniature master’s degree in 15 minutes. Press play.</p>
+    </div>
+
+    <div class="room">
+      <div class="stage">
+        <div class="player" id="player">
+          <div id="yt"></div>
+          <div class="shield" id="shield" aria-hidden="true"></div>
+          <button class="poster" id="poster" type="button" aria-label="Play the workshop">
+            <img src="https://i.ytimg.com/vi/LcJgpAhOvko/maxresdefault.jpg" alt="">
+            <span class="play"></span>
+            <span class="resume" id="resume"></span>
+          </button>
+        </div>
+        <div class="ctrl" id="ctrl">
+          <button type="button" id="cPlay" aria-label="Play">
+            <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
+            <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>
+          </button>
+          <button type="button" id="cBack" aria-label="Back 10 seconds"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3M4.5 4v4h4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>10</span></button>
+          <button type="button" id="cMute" aria-label="Mute"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor"/><path class="w" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path class="m" d="M16 9.5l5 5M21 9.5l-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+          <div class="bar" id="cBar" aria-hidden="true"><i id="cFill"></i><span class="locks" id="locks"></span><span class="scrub-dot" id="cDot"></span></div>
+          <span class="time" id="cTime">0:00 / 15:09</span>
+          <div class="speed" role="group" aria-label="Playback speed">
+            <button type="button" data-rate="1" aria-pressed="true">1x</button><button type="button" data-rate="1.5" aria-pressed="false">1.5x</button><button type="button" data-rate="2" aria-pressed="false">2x</button>
+          </div>
+        </div>
+        <div class="early-row"><a class="early-kit buy-link" id="earlyKit" href="#" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M3 7.5h18V10H3zM12 7.5V20M12 7.5C10.5 4 7 4 7 6s3 1.5 5 1.5M12 7.5c1.5-3.5 5-3.5 5-1.5s-3 1.5-5 1.5"/></svg>Get the kit</a></div>
+        <div class="tuck" id="tuck" hidden>
+          <div class="tuck-head"><b>Your 7 learnings</b><span class="tuck-hint">Hover a card to read it</span><span class="tuck-count" id="tuckCount">0 of 7 unlocked</span></div>
+          <div class="big-note" id="bigNote" hidden></div>
+        </div>
+      </div>
+
+      <aside class="side" aria-label="Your progress and the kit">
+        <!-- appears at the pitch moment -->
+        <div class="kitcard" id="kitcard">
+          <span class="kc-live"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M3 7.5h18V10H3zM12 7.5V20M12 7.5C10.5 4 7 4 7 6s3 1.5 5 1.5M12 7.5c1.5-3.5 5-3.5 5-1.5s-3 1.5-5 1.5"/></svg>The kit I’m unboxing</span>
+          <img class="kc-img" src="https://cdn.shopify.com/s/files/1/0592/6151/7958/files/Connection_Toolkit_-_Main-opt.jpg?v=1744637377&width=700" alt="The Connection Toolkit">
+          <h3>The Connection Toolkit</h3>
+          <p class="kc-sub">100+ ready to go group exercises in one box.</p>
+          <p class="kc-easy">If it fits your work, here it is. If not, no worries. Enjoy the rest of the workshop.</p>
+          <div class="kc-bonus">
+            <b class="kc-lab">Free with your order from this workshop</b>
+            <div id="kcBonus"></div>
+            <p class="kc-exp" id="kcExp">Bonuses disappear in <b data-count="bonus">20:00</b></p>
+          </div>
+          <div class="kc-price"><s class="tv">$972</s><b class="p">$197</b><span>Refund if it’s not a fit</span></div>
+          <a class="btn green big buy-link" href="#">Get the kit
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="kc-more" href="#offer">See everything you get</a>
+        </div>
+      </aside>
+    </div>
+
+    <div class="notes-head" id="notesTop">
+      <div>
+        <p class="sub">Your learnings</p>
+        <h2>Unlock 7 Learnings as You Watch.</h2>
+        <p class="ntip">Each lock on the video bar is one learning. Watch past it and its card flips. The box icon marks where I unbox the kit I use.</p>
+      </div>
+      <p id="noteCount" class="ncount">0 of 7 unlocked</p>
+    </div>
+    <div class="notes seven" id="notes"></div>
+
+    <section class="wproof" aria-label="What people say">
+      <div class="proof">
+        <div class="faces" aria-hidden="true">
+          <img src="assets/people/Jared_Morrison.jpg" alt=""><img src="assets/people/Heather_Italiano.jpg" alt=""><img src="assets/people/Renee_Thompson.jpg" alt=""><img src="assets/people/Mark_Collard.jpg" alt=""><img src="assets/people/Janet_Fratoni.jpg" alt="">
+        </div>
+        <div>
+          <span class="stars5" aria-label="Five stars">★★★★★</span>
+          <b id="proofTrusted"></b>
+          <span id="proofReviews"></span>
+        </div>
+      </div>
+      <p class="wp-logos">Chad has led these exercises with 100,000+ people at places like</p>
+      <div class="marquee" aria-label="Organizations Chad has worked with"><div class="track-m" id="logoTrack"></div></div>
+      <div class="lovewall short" id="wallTop"></div>
+    </section>
+
+    <section class="peek" aria-label="Peek inside the Connection Toolkit">
+      <div class="center"><p class="sub">While you listen</p><h2>Peek inside Chad Littlefield’s Facilitation Toolkit</h2><p class="lede" style="margin-top:10px">Tap the dots to see what each tool is for.</p><a class="early-kit peek-kit buy-link" href="#">Get the kit<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+      <div class="hotspots" id="hotspots">
+        <img src="assets/kit-flatlay.jpg" alt="Everything in the Connection Toolkit, laid out on a table">
+      </div>
+    </section>
+  </main>
+
+  <section class="offer" id="offer" aria-label="The Connection Toolkit">
+    <div class="wrap">
+      <div class="stack-wrap">
+        <div class="stack" id="stackCard">
+          <div class="stack-head">
+            <h3>Here’s everything you get</h3>
+          </div>
+          <div class="scol"><span>What you get</span><span>Valued at</span></div>
+          <div id="stackRows"></div>
+          <div class="stack-total"><span>Total value</span><s id="totalValue">$972</s></div>
+          <div class="now">
+            <p id="nowLine">Right now, you can get all this for</p>
+            <b class="p">$197</b>
+          </div>
+          <a class="btn green big buy-link" href="#">Yes, send me the kit
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <p class="fine" style="justify-content:center"><span><img src="assets/plain-green-Checkmark.svg" alt="">Secure checkout on shop.weand.me</span></p>
+          <div class="badges">
+            <div class="badge blue"><img src="assets/guarantee.webp" alt=""><p><b>If you don’t like your toolkit, we’ll refund your money. Period.</b> This might be the only time we won’t ask questions.</p></div>
+            <div class="badge green"><img src="assets/sustainable.png" alt=""><p><b>Your purchase is 100% carbon neutral.</b> Through our partnership with Mossy Earth, your order helps rewild and reforest the planet.</p></div>
+          </div>
+          <p class="stack-live" id="stackLive">Workshop bonuses disappear in <b data-count="bonus">20:00</b></p>
+        </div>
+      </div>
+
+      <div class="glance">
+        <h2>Effortless engagement at a glance</h2>
+        <div class="glance-row">
+          <div><img src="assets/glance/g1.png" alt=""><p>No-prep, plug-and-play simplicity</p></div>
+          <div><img src="assets/glance/g2.png" alt=""><p>100+ icebreaker and teambuilding strategies</p></div>
+          <div><img src="assets/glance/g3.png" alt=""><p>Trusted by 100K leaders worldwide</p></div>
+          <div><img src="assets/glance/g4.png" alt=""><p>Backed by research, proven in practice</p></div>
+          <div><img src="assets/glance/g5.png" alt=""><p>Super premium quality, built to last</p></div>
+        </div>
+      </div>
+
+      <div class="chadline">
+        <img class="face" src="assets/chad-headshot.webp" alt="Chad Littlefield">
+        <blockquote>“This is my life’s work packed into a box.”</blockquote>
+      </div>
+    </div>
+
+    <div class="love" style="padding-top:72px">
+      <div class="heartband" title="Tap for more hearts">
+        <canvas id="hearts" aria-hidden="true"></canvas>
+        <div class="heartband-in">
+          <p class="sub">The wall of love</p>
+          <h2>Trusted by 100,000+ leaders, trainers, educators and facilitators</h2>
+        </div>
+      </div>
+      <div class="wrap"><div class="lovewall" id="wall"></div></div>
+    </div>
+
+    <div class="wrap">
+      <div class="center" style="margin-top:72px"><p class="sub">Good questions</p><h2 style="margin-top:10px">Before you decide</h2></div>
+      <div class="faq">
+        <details><summary>Will this work with a skeptical or quiet group?</summary><p>That’s who it was designed for. Everything in the kit is built on choice and small groups, so nobody is put on the spot in front of the whole room.</p></details>
+        <details><summary>Does it work for remote and hybrid teams?</summary><p>Yes. The nine strategies on the roadmap apply in person, remote and hybrid.</p></details>
+        <details><summary>How big can my group be?</summary><p>Chad has led the question swap with 30 executives in a workshop and with 6,000 people in an arena. For large groups, add extra decks.</p></details>
+        <details><summary>Is this for beginner or advanced facilitators?</summary><p>Both. The magic of this toolkit is that it has super simple, powerful ways to use it on day one, like handing everyone a card and asking them to pair up. It also has really advanced, creative uses for experienced facilitators who want to design whole sessions around connection.</p></details>
+        <details><summary>Do you ship internationally?</summary><p>Yes. About a quarter of our orders go outside the US. International shipping is $19.95 and usually takes 2 to 4 weeks, depending on your local postal service.</p></details>
+        <details><summary>How fast will it arrive in the US?</summary><p>Orders usually ship within a day or two, and US shipping is free. You’ll get a tracking number by email as soon as it ships. If you need it for a specific event, order a little early.</p></details>
+        <details><summary>We’re a school or nonprofit. Do we need tax paperwork?</summary><p>No. We cover the tax on our end to make it easy for the schools and nonprofits that use our tools. There’s no exemption form to send. Just order by card on our store.</p></details>
+        <details><summary>When do the workshop bonuses expire?</summary><p>20 minutes after the kit is unboxed in the video. The timer on this page is yours alone and it’s real. After it runs out, the Toolkit and masterclass are still $197 on our store, just without the free deck and the printables.</p></details>
+        <details><summary>What if it isn’t a fit?</summary><p>We’ll refund your money. Period.</p></details>
+      </div>
+
+      <div class="center" style="margin:64px auto 0;max-width:520px">
+        <a class="btn green big buy-link" href="#">Get the Connection Toolkit</a>
+        <p class="fine" style="justify-content:center"><span id="finalLive">Workshop bonuses disappear in <b data-count="bonus">20:00</b></span></p>
+      </div>
+    </div>
+  </section>
+
+  <footer style="margin-top:72px">
+    <img class="url" src="assets/url-blue.png" alt="www.weand.me">
+    <p>© We and Me, Inc.</p>
+  </footer>
+</div>
+
+<div class="sticky" id="sticky">
+  <div><b>Connection Toolkit, <s class="tv">$972</s> <span class="p">$197</span></b><span id="stickyLive">Bonuses disappear in <b data-count="bonus">20:00</b></span></div>
+  <a class="btn green buy-link" href="#">Get the kit</a>
+</div>
+
+<!-- order panel: step 1 is the order, step 2 is the one-time upgrade. The video keeps playing. -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Your order" aria-hidden="true">
+  <header><h3 id="dTitle">Your order</h3><button type="button" id="drawerX" aria-label="Close and go back to the workshop">×</button></header>
+
+  <div class="dstep" id="step1">
+    <div class="body">
+      <div class="line">
+        <img src="https://cdn.shopify.com/s/files/1/0592/6151/7958/files/Connection_Toolkit_-_Main-opt.jpg?v=1744637377&width=200" alt="">
+        <div><b>Connection Toolkit</b><span>Two decks, the roadmap, the book and playmeo access.</span></div>
+        <div class="amt p">$197</div>
+      </div>
+      <div class="dbonus" id="drawerBonus"></div>
+    </div>
+    <footer>
+      <div class="total"><span>Total before shipping</span><b class="p">$197</b></div>
+      <a class="btn green big" id="toStep2" href="#" target="_blank" rel="noopener">Continue to checkout
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <p>Secure checkout opens in a new tab, so your workshop keeps playing here.</p>
+      <img class="trust-row" src="assets/trust-row.webp" alt="100% happiness guaranteed. Trusted by 100,000+ leaders. Free shipping on all U.S. orders.">
+    </footer>
+  </div>
+
+  <div class="dstep" id="step2" hidden>
+    <div class="body">
+      <span class="oto-tag">One time only: this offer won’t show again</span>
+      <h3 class="oto-h">Or upgrade to every tool we make instead</h3>
+      <img class="oto-img" id="otoImg" src="" alt="The Effortless Engagement Kit: every We and Me tool in one kit">
+      <p class="oto-p">The <b>Effortless Engagement Kit</b> is every single tool we make packed into one kit. It includes a crash course in <b>The Contribution Method</b>, the exact framework Chad uses to design 100% of his engagements.</p>
+      <ul class="oto-list">
+        <li><img src="assets/plain-green-Checkmark.svg" alt="">Cut your prep time in half</li>
+        <li><img src="assets/plain-green-Checkmark.svg" alt="">Double the engagement in every group you lead</li>
+        <li><img src="assets/plain-green-Checkmark.svg" alt="">Turn each engagement into at least two new opportunities</li>
+      </ul>
+      <p class="oto-small">Includes everything in the Connection Toolkit, plus Sticker Nametags, the Guided Journal, <i>How to Make Virtual Engagement Easy</i>, Future Focused cards, the printable card files, and both masterclasses.</p>
+      <p class="oto-small" id="otoValueNote"></p>
+    </div>
+    <footer>
+      <div class="total oto-total"><span>Upgrade instead</span><span class="oto-prices"><small>Valued at <s id="otoValue">$1,708</s></small><b id="otoPrice">$497</b></span></div>
+      <a class="btn green big" id="otoYes" href="#" target="_blank" rel="noopener">Yes, upgrade instead</a>
+      <a class="nothanks" id="otoNo" href="#" target="_blank" rel="noopener">No thanks, just the Connection Toolkit for <span class="p">$197</span></a>
+    </footer>
+  </div>
+</aside>
+
+<script src="assets/config.js"></script>
+<script src="assets/funnel.js"></script>
+<script>
+(function(){
+  var C = window.WORKSHOP, LS = WS.LS, qs = WS.qs, track = WS.track, $ = function(id){ return document.getElementById(id); };
+  function mmss(s){ s = Math.max(0, Math.floor(s)); return Math.floor(s/60) + ':' + ('0' + s%60).slice(-2); }
+  function money(n){ return '$' + n.toLocaleString(); }
+  var D = C.durationSeconds, L = C.learnings;
+  // Preview mode for Chad and the team: ?preview=1 turns on a scrubbable bar (remembered in this browser), ?preview=0 turns it off.
+  if(qs.get('preview') === '1' || qs.get('demo') === '1') LS.set('ws_preview', '1');
+  if(qs.get('preview') === '0') LS.del('ws_preview');
+  var PREVIEW = LS.get('ws_preview') === '1';
+  if(PREVIEW){ document.body.classList.add('preview'); $('pvTag').hidden = false; }
+
+  var name = LS.get('ws_name');
+  if(!LS.get('ws_registered')) LS.set('ws_registered', String(Date.now()));   // preview: arrived without signing up
+
+  /* ----- the one-hour viewing window (real, per person) ----- */
+  function windowOpen(){ return Date.now() < WS.watchDeadline(); }
+  var closed = false, started = false;
+  function showClosed(){
+    closed = true; ['offer','sticky','winPill'].forEach(function(id){ $(id).style.display = 'none'; });
+    $('room').hidden = true; $('closed').hidden = false;
+    var used = LS.get('ws_replay') === '1'; $('closedOnce').hidden = used; $('closedDone').hidden = !used;
+    track('WindowClosed');
+  }
+  $('reopen').addEventListener('click', function(){ LS.set('ws_replay', '1'); LS.set('ws_window', String(Date.now())); location.reload(); });
+  if(!windowOpen()) showClosed();
+  else WS.countdown('watch', function(){ if(!document.body.classList.contains('revealed')) $('winPill').textContent = started ? 'Window closed, finish watching' : 'Window closed'; if(!started) showClosed(); });
+
+  /* ----- prices, value stack, bonuses ----- */
+  document.querySelectorAll('.p').forEach(function(e){ e.textContent = money(C.price); });
+  var total = C.stack.reduce(function(a, s){ return a + s.value; }, 0);
+  var bonusTotal = C.stack.filter(function(s){ return s.bonus && !s.keep; }).reduce(function(a, s){ return a + s.value; }, 0);
+  $('totalValue').textContent = money(total); document.querySelectorAll('.tv').forEach(function(e){ e.textContent = money(total); });
+  function srow(s){
+    return '<div class="srow' + (s.bonus && !s.keep ? ' bonus' : '') + '"><img src="' + s.img + '" alt="" loading="lazy"><div>' +
+      '<b>' + s.title + '</b><span>' + s.detail + '</span></div><div class="val">' + money(s.value) + '</div></div>';
+  }
+  $('stackRows').innerHTML = C.stack.filter(function(s){ return !s.bonus; }).map(srow).join('') +
+    '<div class="sbonus"><b class="kc-lab">Free with your order from this workshop</b>' + C.stack.filter(function(s){ return s.bonus; }).map(srow).join('') + '</div>';
+  // before the offer appears the bonus clock hasn't started, so the bonuses count as available
+  function bonusActive(){ var d = WS.bonusDeadline(); return !d || Date.now() < d; }
+  function paintBonus(){
+    var on = bonusActive(), expired = !!WS.bonusDeadline() && !on;
+    document.body.classList.toggle('bonus-expired', expired);
+    if(expired){
+      $('stackLive').textContent = 'Workshop bonuses expired'; $('kcExp').textContent = 'These bonuses have expired. The kit is still $' + C.price + ' on our store.';
+      $('stickyLive').textContent = 'Workshop bonuses expired'; $('finalLive').textContent = 'The workshop bonuses have expired.';
+      $('nowLine').textContent = 'The workshop bonuses have expired. The Toolkit and masterclass are still';
+      $('totalValue').textContent = money(total - bonusTotal); document.querySelectorAll('.tv').forEach(function(e){ e.textContent = money(total - bonusTotal); });
+      if(revealed) $('winPill').textContent = 'Workshop bonuses have ended';
+    }
+    var side = '', drawer = '';
+    C.stack.forEach(function(s){ if(!s.bonus) return; var live = on || s.keep;
+      side += '<div class="kc-item' + (s.keep ? ' keep' : '') + '"><img src="' + s.img + '" alt=""><span>' + s.title + '<em>' + money(s.value) + ' value</em></span></div>';
+      drawer += '<div class="line' + (live ? '' : ' gone') + '"><img src="' + s.img + '" alt=""><div><b>' + s.title + '</b><span>' + (live ? 'Workshop bonus, a ' + money(s.value) + ' value' : 'Workshop bonus expired') + '</span></div><div class="free">' + (live ? 'Free' : '') + '</div></div>';
+    });
+    $('kcBonus').innerHTML = side; $('drawerBonus').innerHTML = drawer;
+    buildCheckout();
+  }
+
+  /* ----- checkout links (Shopify cart permalinks go straight to checkout) ----- */
+  function link(items, code){
+    var p = new URLSearchParams(); p.set('ref', 'workshop'); p.set('attributes[source]', 'workshop.weand.me');
+    if(code) p.set('discount', code);
+    qs.forEach(function(v,k){ if(/^utm_/.test(k)) p.set(k, v); });
+    return 'https://' + C.shopDomain + '/cart/' + items + '?' + p.toString();
+  }
+  function buildCheckout(){
+    var on = bonusActive();
+    var toolkitUrl = link(C.toolkitVariantId + ':1' + (on && C.bonusVariantId ? ',' + C.bonusVariantId + ':1' : ''), on ? C.bonusDiscountCode : '');
+    $('otoNo').href = toolkitUrl; $('otoYes').href = C.oto.show ? link(C.oto.variantId + ':1', C.oto.discountCode) : toolkitUrl;
+    var showOto = C.oto.show && LS.get('ws_oto_seen') !== '1';
+    $('toStep2').href = showOto ? '#' : toolkitUrl;
+    $('toStep2').target = showOto ? '' : '_blank';
+  }
+  $('otoImg').src = C.oto.img; $('otoPrice').textContent = money(C.oto.price);
+  if(C.oto.valuedAt){ $('otoValue').textContent = money(C.oto.valuedAt); $('otoValueNote').textContent = C.oto.valueNote || ''; }
+  else $('otoValue').parentNode.hidden = true;
+
+  /* ----- order panel ----- */
+  var seenBuy = false, revealed = false;
+  function syncSticky(){ $('sticky').classList.toggle('show', revealed && !seenBuy && !(typeof playing === 'function' && playing()) && !$('drawer').classList.contains('open')); }
+  function step(n){ $('step1').hidden = n !== 1; $('step2').hidden = n !== 2; $('dTitle').textContent = n === 2 ? 'Before you check out' : 'Your order'; }
+  function openDrawer(e){ if(e) e.preventDefault(); step(1); $('drawer').classList.add('open'); $('scrim').classList.add('open'); $('drawer').setAttribute('aria-hidden', 'false'); syncSticky(); track('AddToCart', {value: C.price, currency: 'USD', content_name: 'Connection Toolkit'}); }
+  function closeDrawer(){ $('drawer').classList.remove('open'); $('scrim').classList.remove('open'); $('drawer').setAttribute('aria-hidden', 'true'); syncSticky(); }
+  document.querySelectorAll('.buy-link').forEach(function(a){ a.addEventListener('click', openDrawer); });
+  $('drawerX').addEventListener('click', closeDrawer); $('scrim').addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeDrawer(); });
+  $('toStep2').addEventListener('click', function(e){
+    if($('toStep2').getAttribute('href') === '#'){ e.preventDefault(); LS.set('ws_oto_seen', '1'); step(2); track('UpsellViewed'); buildCheckout(); }
+    else { track('InitiateCheckout', {value: C.price, currency: 'USD'}); setTimeout(closeDrawer, 400); }
+  });
+  $('otoYes').addEventListener('click', function(){ track('UpsellAccepted', {value: C.oto.price}); track('InitiateCheckout', {value: C.oto.price, currency: 'USD'}); setTimeout(closeDrawer, 400); });
+  $('otoNo').addEventListener('click', function(){ track('UpsellDeclined'); track('InitiateCheckout', {value: C.price, currency: 'USD'}); setTimeout(closeDrawer, 400); });
+
+  /* ----- peek inside the kit: dots on the photo ----- */
+  var SPOTS = [
+    {x: 29, y: 40, t: 'The Connection Toolkit', p: 'What would change if every meeting, class or retreat you led started with real conversation? Everything you need is in this one box.'},
+    {x: 52.5, y: 40, t: 'Ask Powerful Questions', p: 'Why do some questions open people up while others shut them down? The book Chad co-wrote with Will Wise shows how to ask the first kind.'},
+    {x: 68, y: 52, t: 'The Roadmap to Connection', p: 'Nine ways to spark connection, from a 30 second opener to a deep conversation. Scan any QR code for a short lesson.'},
+    {x: 38, y: 66, t: 'We! Engage Cards', p: 'Ask people to pick a photo that shows a strength they bring. They’ll remember it, and each other, long after the meeting ends.'},
+    {x: 54.5, y: 69, t: 'We! Connect Cards', p: 'Simple questions that get any two people talking in seconds. The same deck behind the question swap Chad has led with 6,000 people at once.'}
+  ];
+  var hs = $('hotspots');
+  // keep a tooltip fully on screen (matters on phones)
+  function fitTip(b){ var t = b.querySelector('.tip'); t.style.marginLeft = '0px'; var r = t.getBoundingClientRect(), W = document.documentElement.clientWidth, pad = 12, dx = 0;
+    if(r.right > W - pad) dx = W - pad - r.right; if(r.left + dx < pad) dx = pad - r.left; t.style.marginLeft = dx + 'px'; }
+  function closeAll(){ hs.querySelectorAll('.spot.open').forEach(function(x){ x.classList.remove('open'); x.setAttribute('aria-expanded', 'false'); }); }
+  SPOTS.forEach(function(s, i){
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'spot'; b.style.left = s.x + '%'; b.style.top = s.y + '%';
+    b.setAttribute('aria-label', s.t); b.setAttribute('aria-expanded', 'false');
+    b.innerHTML = '<span class="dotp">+</span><span class="tip' + (s.x > 60 ? ' left' : '') + (s.y > 60 ? ' up' : '') + '"><b>' + s.t + '</b>' + s.p + '</span>';
+    function show(){ if(b.classList.contains('open')) return; closeAll(); b.classList.add('open'); b.setAttribute('aria-expanded', 'true'); track('KitPeek', {item: s.t}); fitTip(b); }
+    var hovered = false;
+    b.addEventListener('pointerenter', function(e){ if(e.pointerType === 'mouse'){ hovered = true; show(); } });
+    b.addEventListener('pointerleave', function(e){ if(e.pointerType === 'mouse'){ hovered = false; closeAll(); } });
+    b.addEventListener('focus', show);
+    b.addEventListener('click', function(e){ e.stopPropagation(); if(hovered) return show(); b.classList.contains('open') ? closeAll() : show(); });
+    hs.appendChild(b);
+  });
+  document.addEventListener('click', closeAll);
+
+  /* ----- seven learnings: locks on the video bar at each learning's moment, cards that flip below ----- */
+  var lock = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
+  var check = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var gift = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M3 7.5h18V10H3zM12 7.5V20M12 7.5C10.5 4 7 4 7 6s3 1.5 5 1.5M12 7.5c1.5-3.5 5-3.5 5-1.5s-3 1.5-5 1.5"/></svg>';
+  $('locks').insertAdjacentHTML('beforeend', '<span class="lk gift" id="lkGift" title="Where I unbox the kit" style="left:' + (C.revealAtSeconds / D * 100).toFixed(2) + '%">' + gift + '</span>');
+  L.forEach(function(l, i){
+    $('locks').insertAdjacentHTML('beforeend', '<span class="lk" id="lk' + i + '" style="left:' + (l.t / D * 100).toFixed(2) + '%">' + lock + '</span>');
+    var d = document.createElement('div'); d.className = 'note'; d.id = 'note' + i;
+    d.innerHTML = '<div class="face back"><span class="q">?</span><span>Learning ' + (i + 1) + '</span></div>' +
+      '<div class="face front ' + l.color + '"><small>' + l.title + '</small><b class="num">' + (i + 1) + '</b><p>' + l.text + '</p><em>' + (l.by || '&nbsp;') + '</em></div>';
+    $('notes').appendChild(d);
+  });
+
+  /* ----- once the kit appears, the cards tuck up small under the play bar; hover or tap one to read it ----- */
+  var big = $('bigNote');
+  if(window.matchMedia && matchMedia('(hover: none)').matches) document.querySelector('.tuck-hint').textContent = 'Tap a card to read it';
+  function tuck(animate){
+    if(document.body.classList.contains('tucked')) return;
+    $('tuck').hidden = false; $('tuck').insertBefore($('notes'), big); document.body.classList.add('tucked');
+    if(animate) $('tuck').classList.add('anim');
+  }
+  function showBig(i){
+    var n = $('note' + i), l = L[i]; if(!n.classList.contains('open')){ big.hidden = true; return; }
+    big.className = 'big-note ' + l.color; big.innerHTML = '<small>' + l.title + '</small><p>' + l.text + '</p>' + (l.by ? '<em>' + l.by + '</em>' : ''); big.hidden = false; big.dataset.i = i;
+    var T = $('tuck').getBoundingClientRect(), R = n.getBoundingClientRect(), bw = big.offsetWidth, x = R.left - T.left + R.width / 2 - bw / 2;
+    big.style.left = Math.max(0, Math.min(T.width - bw, x)) + 'px'; big.style.top = (R.top - T.top - big.offsetHeight - 10) + 'px';
+  }
+  function hideBig(){ big.hidden = true; }
+  L.forEach(function(l, i){ var n = $('note' + i);
+    n.addEventListener('pointerenter', function(e){ if(e.pointerType === 'mouse' && document.body.classList.contains('tucked')) showBig(i); });
+    n.addEventListener('pointerleave', function(e){ if(e.pointerType === 'mouse') hideBig(); });
+    n.addEventListener('click', function(e){ if(!document.body.classList.contains('tucked')) return; e.stopPropagation(); big.hidden || big.dataset.i != i ? showBig(i) : hideBig(); });
+  });
+  document.addEventListener('click', hideBig);
+
+  /* ----- social proof under the learnings ----- */
+  $('proofTrusted').textContent = C.proof.trusted; $('proofReviews').textContent = C.proof.reviews;
+  var logos = [['jetblue.png','JetBlue'],['google-new.png','Google'],['starbucks.png','Starbucks'],['jnj.png','Johnson and Johnson'],['cigna.png','Cigna'],['notre-dame.png','Notre Dame'],['usda-new.png','USDA'],['pennstate.png','Penn State'],['tedx.png','TEDx'],['carnegie-new.png','Carnegie'],['goodwill.png','Goodwill'],['asu.png','Arizona State University'],['george-mason.png','George Mason University'],['indiana.png','Indiana University'],['embry-riddle.png','Embry-Riddle'],['wisconsin.png','University of Wisconsin'],['conscious-capitalism.png','Conscious Capitalism']];
+  var lh = logos.map(function(l){ return '<img src="assets/logos/' + l[0] + '" alt="' + l[1] + '">'; }).join('');
+  $('logoTrack').innerHTML = '<div>' + lh + '</div><div aria-hidden="true">' + lh + '</div>';
+  var TOP = WS.LOVE.filter(function(t){ return t.img; }).slice(0, 3);
+  WS.wall($('wallTop'), TOP);
+
+  /* ----- the offer reveal ----- */
+  var io = new IntersectionObserver(function(es){ es.forEach(function(e){ seenBuy = e.isIntersecting; }); syncSticky(); }, {threshold: [0, .05]});
+  function reveal(announce){
+    if(revealed || closed) return; revealed = true; LS.set('ws_revealed', '1');
+    var fresh = !WS.bonusDeadline(); WS.startBonusClock();
+    $('earlyKit').hidden = true;
+    $('kitcard').classList.add('show'); $('offer').classList.add('show'); document.body.classList.add('has-sticky', 'revealed');
+    tuck(announce);
+    // the top-right timer switches from the viewing window to the bonus deadline
+    $('winPill').classList.add('bonus'); $('winPill').innerHTML = gift + 'Bonuses disappear in <b data-count="bonus">' + mmss(C.bonusWindowMinutes * 60) + '</b>';
+    if(announce){ $('kitcard').classList.add('anim'); $('offer').classList.add('anim'); if(fresh) track('OfferRevealed'); }
+    io.observe($('stackCard')); io.observe($('kitcard')); paintBonus(); syncSticky();
+    WS.countdown('bonus', paintBonus);
+    WS.wall($('wall'), WS.LOVE.filter(function(t){ return TOP.indexOf(t) < 0; })); WS.hearts($('hearts'), 220);
+  }
+
+  var maxT = parseFloat(LS.get('ws_max') || '0') || 0, lastT = parseFloat(LS.get('ws_pos') || '0') || 0, marks = {};
+  function paint(t){
+    if(t > maxT){ maxT = t; LS.set('ws_max', String(Math.floor(maxT))); }
+    var got = 0, cur = -1;
+    L.forEach(function(l, i){
+      var lk = $('lk' + i);
+      if(maxT >= l.t){ got++; if(!lk.classList.contains('done')){ lk.classList.add('done'); lk.innerHTML = check; $('note' + i).classList.add('open'); if(playing()){ lk.classList.add('anim'); $('note' + i).classList.add('anim'); } } }
+      else if(cur < 0){ cur = i; }
+      lk.classList.toggle('cur', i === cur && !(maxT < C.revealAtSeconds && l.t > C.revealAtSeconds));
+    });
+    $('lkGift').classList.toggle('done', maxT >= C.revealAtSeconds); $('lkGift').classList.toggle('cur', maxT < C.revealAtSeconds && (cur < 0 || L[cur].t > C.revealAtSeconds));
+    $('noteCount').textContent = got + ' of ' + L.length + ' unlocked'; $('tuckCount').textContent = got + ' of ' + L.length + ' unlocked';
+    $('cFill').style.width = Math.min(100, t / D * 100) + '%'; $('cBar').style.setProperty('--p', Math.min(100, t / D * 100) + '%'); $('cTime').textContent = mmss(t) + ' / ' + mmss(D);
+    var early = $('earlyKit'), showEarly = !revealed && maxT >= (C.earlyKitAtSeconds || 24);
+    if(showEarly && early.hidden){ early.hidden = false; if(playing()) early.classList.add('anim'); }
+    else if(!showEarly) early.hidden = true;
+    if(maxT >= C.revealAtSeconds) reveal(playing());
+    var pct = Math.round(maxT / (D - 5) * 100);
+    [25, 50, 75, 100].forEach(function(m){ if(pct >= m && !marks[m]){ marks[m] = 1; if(!LS.get('ws_m' + m)){ LS.set('ws_m' + m, '1'); track('Video' + m); } } });
+  }
+  paintBonus();   // fills the order panel so the early "Get the kit" link shows the bonuses too
+  if(qs.get('reveal') === '1' || LS.get('ws_revealed') === '1') reveal(false);
+  paint(lastT > 20 && lastT < D - 20 ? lastT : 0);
+  if(lastT > 20 && lastT < D - 20) $('resume').textContent = 'Pick up where you left off, at ' + mmss(lastT);
+  else lastT = 0;
+
+  /* ----- YouTube player: our own controls, no scrubbing ahead, no captions ----- */
+  var player = null, ready = false, pendingStart = 0, rate = parseFloat(LS.get('ws_rate') || '1') || 1;
+  function load(at){
+    pendingStart = at; if(window._ytLoading) return; window._ytLoading = true;
+    var s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s);
+  }
+  window.onYouTubeIframeAPIReady = function(){
+    player = new YT.Player('yt', { videoId: C.youtubeId, host: 'https://www.youtube-nocookie.com',
+      playerVars: { autoplay: 1, controls: 0, disablekb: 1, fs: 0, rel: 0, playsinline: 1, modestbranding: 1, iv_load_policy: 3, cc_load_policy: 0, cc_lang_pref: 'none', start: Math.floor(pendingStart || 0), origin: location.origin },
+      events: { onReady: function(){ ready = true; started = true; $('poster').style.display = 'none'; track('VideoPlay');
+                  if(qs.get('mute') === '1') player.mute();
+                  try{ player.unloadModule('captions'); player.unloadModule('cc'); }catch(e){}
+                  player.setPlaybackRate(rate); player.playVideo(); syncCtrl(); },
+                onStateChange: function(e){ if(e.data === 1){ try{ player.unloadModule('captions'); }catch(x){} } if(e.data === 0) paint(D); syncCtrl(); syncSticky(); } } });
+  };
+  function playing(){ return ready && player.getPlayerState && player.getPlayerState() === 1; }
+  function toggle(){ if(!ready) return load(lastT); playing() ? player.pauseVideo() : player.playVideo(); }
+  function syncCtrl(){
+    var p = playing(); $('ctrl').classList.toggle('playing', p); $('cPlay').setAttribute('aria-label', p ? 'Pause' : 'Play');
+    var m = ready && player.isMuted && player.isMuted(); $('ctrl').classList.toggle('muted', !!m); $('cMute').setAttribute('aria-label', m ? 'Unmute' : 'Mute');
+  }
+  function paintRate(){ document.querySelectorAll('.speed button').forEach(function(b){ b.setAttribute('aria-pressed', String(parseFloat(b.dataset.rate) === rate)); }); }
+  document.querySelectorAll('.speed button').forEach(function(b){ b.addEventListener('click', function(){
+    rate = parseFloat(b.dataset.rate); LS.set('ws_rate', String(rate)); paintRate(); if(ready) player.setPlaybackRate(rate); track('SpeedChanged', {rate: rate}); }); });
+  paintRate();
+  // preview scrubbing: click or drag anywhere on the bar
+  if(PREVIEW){
+    var bar = $('cBar'), drag = false;
+    function seekAt(e){ var r = bar.getBoundingClientRect(), x = (e.touches ? e.touches[0].clientX : e.clientX);
+      var f = Math.max(0, Math.min(1, (x - r.left) / r.width)), t = f * D; $('cFill').style.width = (f * 100) + '%'; bar.style.setProperty('--p', (f * 100) + '%'); $('cTime').textContent = mmss(t) + ' / ' + mmss(D);
+      if(ready) player.seekTo(t, true); else { lastT = t; load(t); } paint(t); }
+    bar.addEventListener('pointerdown', function(e){ drag = true; bar.setPointerCapture(e.pointerId); seekAt(e); });
+    bar.addEventListener('pointermove', function(e){ if(drag) seekAt(e); });
+    bar.addEventListener('pointerup', function(){ drag = false; });
+  }
+  $('poster').addEventListener('click', function(){ load(lastT); });
+  $('shield').addEventListener('click', toggle);
+  $('cPlay').addEventListener('click', toggle);
+  $('cBack').addEventListener('click', function(){ if(ready) player.seekTo(Math.max(0, player.getCurrentTime() - 10), true); });
+  $('cMute').addEventListener('click', function(){ if(!ready) return; player.isMuted() ? player.unMute() : player.mute(); setTimeout(syncCtrl, 50); });
+  document.addEventListener('keydown', function(e){ if(e.code === 'Space' && !/INPUT|TEXTAREA|BUTTON|SUMMARY|A/.test(e.target.tagName) && ready){ e.preventDefault(); toggle(); } });
+  setInterval(function(){
+    if(!ready || !player.getCurrentTime) return;
+    var t = player.getCurrentTime() || 0;
+    if(!PREVIEW && t > maxT + 4){ player.seekTo(maxT, true); return; }   // no skipping ahead (2x speed moves about 1 second per check)
+    if(playing()){ LS.set('ws_pos', String(Math.floor(t))); paint(t); }
+    syncCtrl();
+  }, 500);
+  track('ViewContent', {content_name: 'Workshop watch page'});
+})();
+</script>
+</body>
+</html>

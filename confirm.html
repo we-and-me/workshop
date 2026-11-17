@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>You’re in: Connection Before Content</title>
+<link rel="icon" href="assets/master-green-sm.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="watch-bg" style="min-height:100vh">
+  <main class="wrap" style="padding-top:36px">
+    <div class="confirm">
+      <div class="tick"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h1 id="hi">You’re in.</h1>
+      <p class="lede">Your workshop is ready. Press the button and it starts right away.</p>
+
+      <a class="btn big" id="go" href="watch.html">Start the workshop now
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <p class="fine" style="justify-content:center">
+        <span><img src="assets/plain-green-Checkmark.svg" alt="">15 minutes</span>
+        <span><img src="assets/plain-green-Checkmark.svg" alt="">Sound on</span>
+        <span><img src="assets/plain-green-Checkmark.svg" alt="">Nothing to prepare</span>
+      </p>
+
+      <div class="lpreview">
+        <h3>7 learnings and a look inside the kit</h3>
+        <div class="licons gifted" aria-hidden="true"><span class="li mystery"><svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16"/></svg><span class="glyph">?</span></span><span class="li mystery"><svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16"/></svg><span class="glyph">?</span></span><span class="li mystery"><svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16"/></svg><span class="glyph">?</span></span><span class="li mystery"><svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16"/></svg><span class="glyph">?</span></span><span class="li mystery"><svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16"/></svg><span class="glyph">?</span></span><span class="li mystery"><svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16"/></svg><span class="glyph">?</span></span><span class="li mystery"><svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16"/></svg><span class="glyph">?</span></span><span class="li gift"><svg class="ring" viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16"/></svg><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M3 7.5h18V10H3zM12 7.5V20M12 7.5C10.5 4 7 4 7 6s3 1.5 5 1.5M12 7.5c1.5-3.5 5-3.5 5-1.5s-3 1.5-5 1.5"/></svg></span></span></div>
+        <p>Seven learnings unlock as you watch what I believe is definitively the best icebreaker and form of team building: Connection Before Content. Then I unbox a kit with 100+ icebreaker and team building activities.</p>
+      </div>
+
+      <div class="window" id="window">
+        <p id="winText">This workshop is only available to watch for the next hour.</p>
+        <div class="clock" aria-live="off"><span data-count="watch">60:00</span><small>minutes left</small></div>
+      </div>
+
+      <div class="later">
+        <h3>Not a good time right now?</h3>
+        <p>That’s okay. Pick a time where you do have 15 minutes. Your one-hour window will open then instead, and we’ll put it on your calendar.</p>
+        <div class="later-row">
+          <label for="when" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">When do you want to watch?</label>
+          <input id="when" type="datetime-local">
+          <a class="btn ghost" id="gcal" target="_blank" rel="noopener" href="#">Google Calendar</a>
+          <a class="btn ghost" id="ics" href="#" download="connection-before-content-workshop.ics">Apple or Outlook</a>
+        </div>
+        <p class="saved" id="saved" hidden></p>
+      </div>
+    </div>
+  </main>
+  <footer>
+    <img class="url" src="assets/url-blue.png" alt="www.weand.me">
+    <p>© We and Me, Inc.</p>
+  </footer>
+</div>
+
+<script src="assets/config.js"></script>
+<script src="assets/funnel.js"></script>
+<script>
+(function(){
+  var LS = WS.LS, $ = function(id){ return document.getElementById(id); };
+  if(!LS.get('ws_registered')) LS.set('ws_registered', String(Date.now()));   // someone landed here directly
+  var name = LS.get('ws_name');
+  if(name) $('hi').textContent = 'You’re in, ' + name.slice(0, 24) + '.';
+  var watchUrl = new URL('watch.html' + location.search, location.href).href;
+  $('go').href = 'watch.html' + location.search;
+
+  WS.countdown('watch');
+  function paintWindow(){
+    var start = parseInt(LS.get('ws_window') || '0', 10);
+    if(start && start > Date.now()){
+      $('winText').textContent = 'Your one-hour window opens ' + new Date(start).toLocaleString([], {weekday:'long', hour:'numeric', minute:'2-digit'}) + '.';
+      document.querySelector('#window .clock').hidden = true;
+    } else { $('winText').textContent = 'This workshop is only available to watch for the next hour.'; document.querySelector('#window .clock').hidden = false; }
+  }
+  paintWindow();
+
+  var when = $('when');
+  var d = new Date(); d.setDate(d.getDate() + 1); d.setHours(9, 0, 0, 0);
+  function local(dt){ var p = function(n){ return ('0' + n).slice(-2); }; return dt.getFullYear() + '-' + p(dt.getMonth() + 1) + '-' + p(dt.getDate()) + 'T' + p(dt.getHours()) + ':' + p(dt.getMinutes()); }
+  function utc(dt){ return dt.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); }
+  when.value = local(d); when.min = local(new Date());
+  var title = 'Watch: Connection Before Content workshop (15 min)';
+  var details = 'Your free workshop with Chad Littlefield. It’s open for one hour from this time. Press play here: ' + watchUrl;
+  function pick(){ var s = new Date(when.value); return isNaN(s) ? d : s; }
+  function build(){
+    var s = pick(), e = new Date(s.getTime() + 20 * 60000);
+    $('gcal').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(title) + '&details=' + encodeURIComponent(details) + '&dates=' + utc(s) + '/' + utc(e);
+    var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//We and Me//Workshop//EN', 'BEGIN:VEVENT', 'UID:' + Date.now() + '@workshop.weand.me', 'DTSTAMP:' + utc(new Date()), 'DTSTART:' + utc(s), 'DTEND:' + utc(e), 'SUMMARY:' + title, 'DESCRIPTION:' + details, 'URL:' + watchUrl, 'BEGIN:VALARM', 'TRIGGER:-PT5M', 'ACTION:DISPLAY', 'DESCRIPTION:Workshop', 'END:VALARM', 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+    $('ics').href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+  }
+  // choosing a calendar time moves the one-hour window to that time
+  function save(){
+    var s = pick(); if(s.getTime() <= Date.now()) return;
+    LS.set('ws_window', String(s.getTime())); paintWindow();
+    $('saved').hidden = false; $('saved').textContent = 'Saved. Your workshop will be open for one hour starting ' + s.toLocaleString([], {weekday:'long', month:'short', day:'numeric', hour:'numeric', minute:'2-digit'}) + '.';
+    WS.track('ScheduledLater');
+  }
+  when.addEventListener('input', build); build();
+  $('gcal').addEventListener('click', save); $('ics').addEventListener('click', save);
+  WS.track('CompleteRegistration');
+})();
+</script>
+</body>
+</html>
