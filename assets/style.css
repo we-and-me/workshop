@@ -776,3 +776,6 @@ body.bonus-expired .sbonus{border-color:#B9B9BF;background:var(--pale-gray)}
 @media (max-width:560px){.early-row{justify-content:center}}
 .peek-kit{margin-top:16px}
 .peek-kit svg{width:15px;height:15px}
+/* v11: top quiet pill has no icon and is longer on desktop */
+.early-kit.wide{justify-content:center}
+@media (min-width:561px){.early-kit.wide{min-width:240px;padding:9px 28px}}
