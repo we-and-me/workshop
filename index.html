@@ -178,7 +178,7 @@
     WS.track('Lead');
     var go = function(){ location.href = 'confirm.html' + location.search.replace(/([?&])reset=1&?/, '$1').replace(/[?&]$/, ''); };
     if(C.kitFormId){
-      var body = new URLSearchParams(); body.set('email_address', em); body.set('fields[first_name]', fn);
+      var body = new URLSearchParams(); body.set('email_address', em); body.set('fields[first_name]', fn); body.set('referrer', location.href.replace(/([?&])reset=1&?/, '$1'));
       fetch('https://app.kit.com/forms/' + C.kitFormId + '/subscriptions', {method:'POST', mode:'no-cors', body: body}).then(go, go);
       setTimeout(go, 2500);
     } else { setTimeout(go, 350); }

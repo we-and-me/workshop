@@ -19,7 +19,7 @@ window.WORKSHOP = {
 
   // Kit (email). Paste the Kit form id here to start collecting sign-ups.
   // While this is empty the form works in preview mode: nothing is sent anywhere.
-  kitFormId: "",
+  kitFormId: "10202361",   // Kit form "/workshop (workshop.weand.me free workshop)", no confirmation email
 
   // Social proof lines on the sign-up page. Edit freely.
   proof: {
