@@ -15,7 +15,9 @@ window.WORKSHOP = {
   // watchWindow: how long after signing up (or after the time they picked) the workshop stays open.
   // bonusWindow: how long after the offer appears the workshop bonuses stay available.
   watchWindowMinutes: 60,
-  bonusWindowMinutes: 20,
+  // The bonus clock starts when the first "Get the kit" button appears (0:24), so 25 minutes
+  // ends about 10 minutes after the 15:09 video finishes.
+  bonusWindowMinutes: 25,
 
   // Kit (email). Paste the Kit form id here to start collecting sign-ups.
   // While this is empty the form works in preview mode: nothing is sent anywhere.

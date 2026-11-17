@@ -65,7 +65,7 @@
             <button type="button" data-rate="1" aria-pressed="true">1x</button><button type="button" data-rate="1.5" aria-pressed="false">1.5x</button><button type="button" data-rate="2" aria-pressed="false">2x</button>
           </div>
         </div>
-        <div class="early-row"><a class="early-kit wide buy-link" id="earlyKit" href="#" hidden>Get the kit</a></div>
+        <div class="early-row"><a class="early-kit wide buy-link" id="earlyKit" href="#" hidden>Get the kit on Chad’s desk</a></div>
         <div class="tuck" id="tuck" hidden>
           <div class="tuck-head"><b>Your 7 learnings</b><span class="tuck-hint">Hover a card to read it</span><span class="tuck-count" id="tuckCount">0 of 7 unlocked</span></div>
           <div class="big-note" id="bigNote" hidden></div>
@@ -83,7 +83,7 @@
           <div class="kc-bonus">
             <b class="kc-lab">Free with your order from this workshop</b>
             <div id="kcBonus"></div>
-            <p class="kc-exp" id="kcExp">Bonuses disappear in <b data-count="bonus">20:00</b></p>
+            <p class="kc-exp" id="kcExp">Bonuses disappear in <b data-count="bonus">25:00</b></p>
           </div>
           <div class="kc-price"><s class="tv">$972</s><b class="p">$197</b><span>Refund if it’s not a fit</span></div>
           <a class="btn green big buy-link" href="#">Get the kit
@@ -150,7 +150,7 @@
             <div class="badge blue"><img src="assets/guarantee.webp" alt=""><p><b>If you don’t like your toolkit, we’ll refund your money. Period.</b> This might be the only time we won’t ask questions.</p></div>
             <div class="badge green"><img src="assets/sustainable.png" alt=""><p><b>Your purchase is 100% carbon neutral.</b> Through our partnership with Mossy Earth, your order helps rewild and reforest the planet.</p></div>
           </div>
-          <p class="stack-live" id="stackLive">Workshop bonuses disappear in <b data-count="bonus">20:00</b></p>
+          <p class="stack-live" id="stackLive">Workshop bonuses disappear in <b data-count="bonus">25:00</b></p>
         </div>
       </div>
 
@@ -192,13 +192,13 @@
         <details><summary>Do you ship internationally?</summary><p>Yes. About a quarter of our orders go outside the US. International shipping is $19.95 and usually takes 2 to 4 weeks, depending on your local postal service.</p></details>
         <details><summary>How fast will it arrive in the US?</summary><p>Orders usually ship within a day or two, and US shipping is free. You’ll get a tracking number by email as soon as it ships. If you need it for a specific event, order a little early.</p></details>
         <details><summary>We’re a school or nonprofit. Do we need tax paperwork?</summary><p>No. We cover the tax on our end to make it easy for the schools and nonprofits that use our tools. There’s no exemption form to send. Just order by card on our store.</p></details>
-        <details><summary>When do the workshop bonuses expire?</summary><p>20 minutes after the kit is unboxed in the video. The timer on this page is yours alone and it’s real. After it runs out, the Toolkit and masterclass are still $197 on our store, just without the free deck and the printables.</p></details>
+        <details><summary>When do the workshop bonuses expire?</summary><p>25 minutes after the workshop starts, which gives you about 10 minutes after the video ends. The timer on this page is yours alone and it’s real. After it runs out, the Toolkit and masterclass are still $197 on our store, just without the free deck and the printables.</p></details>
         <details><summary>What if it isn’t a fit?</summary><p>We’ll refund your money. Period.</p></details>
       </div>
 
       <div class="center" style="margin:64px auto 0;max-width:520px">
         <a class="btn green big buy-link" href="#">Get the Connection Toolkit</a>
-        <p class="fine" style="justify-content:center"><span id="finalLive">Workshop bonuses disappear in <b data-count="bonus">20:00</b></span></p>
+        <p class="fine" style="justify-content:center"><span id="finalLive">Workshop bonuses disappear in <b data-count="bonus">25:00</b></span></p>
       </div>
     </div>
   </section>
@@ -210,7 +210,7 @@
 </div>
 
 <div class="sticky" id="sticky">
-  <div><b>Connection Toolkit, <s class="tv">$972</s> <span class="p">$197</span></b><span id="stickyLive">Bonuses disappear in <b data-count="bonus">20:00</b></span></div>
+  <div><b>Connection Toolkit, <s class="tv">$972</s> <span class="p">$197</span></b><span id="stickyLive">Bonuses disappear in <b data-count="bonus">25:00</b></span></div>
   <a class="btn green buy-link" href="#">Get the kit</a>
 </div>
 
@@ -288,7 +288,7 @@
   }
   $('reopen').addEventListener('click', function(){ LS.set('ws_replay', '1'); LS.set('ws_window', String(Date.now())); location.reload(); });
   if(!windowOpen()) showClosed();
-  else WS.countdown('watch', function(){ if(!document.body.classList.contains('revealed')) $('winPill').textContent = started ? 'Window closed, finish watching' : 'Window closed'; if(!started) showClosed(); });
+  else WS.countdown('watch', function(){ if(!document.body.classList.contains('revealed') && !bonusOn) $('winPill').textContent = started ? 'Window closed, finish watching' : 'Window closed'; if(!started) showClosed(); });
 
   /* ----- prices, value stack, bonuses ----- */
   document.querySelectorAll('.p').forEach(function(e){ e.textContent = money(C.price); });
@@ -311,7 +311,7 @@
       $('stickyLive').textContent = 'Workshop bonuses expired'; $('finalLive').textContent = 'The workshop bonuses have expired.';
       $('nowLine').textContent = 'The workshop bonuses have expired. The Toolkit and masterclass are still';
       $('totalValue').textContent = money(total - bonusTotal); document.querySelectorAll('.tv').forEach(function(e){ e.textContent = money(total - bonusTotal); });
-      if(revealed) $('winPill').textContent = 'Workshop bonuses have ended';
+      if(bonusOn) $('winPill').textContent = 'Workshop bonuses have ended';
     }
     var side = '', drawer = '';
     C.stack.forEach(function(s){ if(!s.bonus) return; var live = on || s.keep;
@@ -429,17 +429,25 @@
 
   /* ----- the offer reveal ----- */
   var io = new IntersectionObserver(function(es){ es.forEach(function(e){ seenBuy = e.isIntersecting; }); syncSticky(); }, {threshold: [0, .05]});
+  // the bonus clock starts the first time a "Get the kit" button appears (0:24), not at the unboxing,
+  // so the 25 minutes run out about 10 minutes after the video ends (Chad, Nov 17, 2026)
+  var bonusOn = false;
+  function startBonus(){
+    if(bonusOn || closed) return; bonusOn = true;
+    if(!WS.bonusDeadline()) track('BonusClockStarted');
+    WS.startBonusClock();
+    // the top-right timer switches from the viewing window to the bonus deadline
+    $('winPill').classList.add('bonus'); $('winPill').innerHTML = gift + 'Bonuses disappear in <b data-count="bonus">' + mmss(Math.max(0, WS.bonusDeadline() - Date.now()) / 1000) + '</b>';
+    paintBonus(); WS.countdown('bonus', paintBonus);
+  }
   function reveal(announce){
     if(revealed || closed) return; revealed = true; LS.set('ws_revealed', '1');
-    var fresh = !WS.bonusDeadline(); WS.startBonusClock();
+    startBonus();
     $('earlyKit').hidden = true;
     $('kitcard').classList.add('show'); $('offer').classList.add('show'); document.body.classList.add('has-sticky', 'revealed');
     tuck(announce);
-    // the top-right timer switches from the viewing window to the bonus deadline
-    $('winPill').classList.add('bonus'); $('winPill').innerHTML = gift + 'Bonuses disappear in <b data-count="bonus">' + mmss(C.bonusWindowMinutes * 60) + '</b>';
-    if(announce){ $('kitcard').classList.add('anim'); $('offer').classList.add('anim'); if(fresh) track('OfferRevealed'); }
+    if(announce){ $('kitcard').classList.add('anim'); $('offer').classList.add('anim'); track('OfferRevealed'); }
     io.observe($('stackCard')); io.observe($('kitcard')); paintBonus(); syncSticky();
-    WS.countdown('bonus', paintBonus);
     WS.wall($('wall'), WS.LOVE.filter(function(t){ return TOP.indexOf(t) < 0; })); WS.hearts($('hearts'), 220);
   }
 
@@ -458,6 +466,7 @@
     $('cFill').style.width = Math.min(100, t / D * 100) + '%'; $('cBar').style.setProperty('--p', Math.min(100, t / D * 100) + '%'); $('cTime').textContent = mmss(t) + ' / ' + mmss(D);
     var early = $('earlyKit'), showEarly = !revealed && maxT >= (C.earlyKitAtSeconds || 24);
     if(showEarly && early.hidden){ early.hidden = false; if(playing()) early.classList.add('anim'); }
+    if(maxT >= (C.earlyKitAtSeconds || 24)) startBonus();
     else if(!showEarly) early.hidden = true;
     if(maxT >= C.revealAtSeconds) reveal(playing());
     var pct = Math.round(maxT / (D - 5) * 100);
