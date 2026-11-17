@@ -791,3 +791,11 @@ body.bonus-expired .sbonus{border-color:#B9B9BF;background:var(--pale-gray)}
 .confirm .btn.big{margin-top:22px}
 .duo + .later{margin-top:18px}
 @media(max-width:700px){.duo{grid-template-columns:1fr}}
+/* v12: watch page, Chad's stage photo with the Forbes quote beside it */
+.wforbes{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:center;margin:44px auto 0;max-width:1000px;background:var(--pale-blue);border-radius:var(--r-card);padding:32px}
+.wforbes .photo{border-radius:var(--r-card);overflow:hidden;box-shadow:var(--shadow);transform:rotate(-1.5deg);border:6px solid #fff}
+.wforbes .photo img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}
+.wf-quote blockquote{margin:0;font-size:clamp(1.2rem,2.2vw,1.6rem);line-height:1.4;color:var(--ink)}
+.wf-quote blockquote b{font-weight:700}
+.wf-quote img{width:140px;margin-top:20px;filter:grayscale(1) brightness(.35)}
+@media(max-width:760px){.wforbes{grid-template-columns:1fr;gap:24px;padding:22px;text-align:center}.wf-quote img{margin:18px auto 0}}
