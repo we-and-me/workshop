@@ -544,10 +544,15 @@
   $('cBack').addEventListener('click', function(){ if(ready) player.seekTo(Math.max(0, player.getCurrentTime() - 10), true); });
   $('cMute').addEventListener('click', function(){ if(!ready) return; player.isMuted() ? player.unMute() : player.mute(); setTimeout(syncCtrl, 50); });
   document.addEventListener('keydown', function(e){ if(e.code === 'Space' && !/INPUT|TEXTAREA|BUTTON|SUMMARY|A/.test(e.target.tagName) && ready){ e.preventDefault(); toggle(); } });
+  // no skipping ahead. Phones pause page timers while scrolling but the video keeps playing, so a long gap
+  // between checks is normal: allow as much progress as real time (times speed) could explain
+  var chkT = null, chkAt = 0;
   setInterval(function(){
     if(!ready || !player.getCurrentTime) return;
-    var t = player.getCurrentTime() || 0;
-    if(!PREVIEW && t > maxT + 4){ player.seekTo(maxT, true); return; }   // no skipping ahead (2x speed moves about 1 second per check)
+    var t = player.getCurrentTime() || 0, now = Date.now();
+    var allowed = chkT === null ? maxT + 4 : Math.max(maxT, chkT) + (now - chkAt) / 1000 * rate + 3;
+    if(!PREVIEW && t > maxT + 4 && t > allowed){ player.seekTo(maxT, true); chkT = maxT; chkAt = now; return; }
+    chkT = t; chkAt = now;
     if(playing()){ LS.set('ws_pos', String(Math.floor(t))); paint(t); }
     syncCtrl();
   }, 500);
