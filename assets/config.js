@@ -8,14 +8,14 @@ window.WORKSHOP = {
   revealAtSeconds: 670,
 
   // A quiet "Get the kit" link under the video, from the first time Chad mentions the kit
-  // (0:20, "I'm going to end by pointing you toward a kit") until the full kit card appears.
-  earlyKitAtSeconds: 24,
+  // (first kit mention is 0:20; the team moved the button to 0:30 on Nov 23, 2026) until the full kit card appears.
+  earlyKitAtSeconds: 30,
 
   // Real deadlines, per person (minutes).
   // watchWindow: how long after signing up (or after the time they picked) the workshop stays open.
   // bonusWindow: how long after the offer appears the workshop bonuses stay available.
   watchWindowMinutes: 60,
-  // The bonus clock starts when the first "Get the kit" button appears (0:24), so 40 minutes
+  // The bonus clock starts when the first "Get the kit" button appears (0:30), so 40 minutes
   // ends about 25 minutes after the 15:09 video finishes.
   bonusWindowMinutes: 40,
 
@@ -31,7 +31,7 @@ window.WORKSHOP = {
 
   // Shopify. The button sends people straight to checkout with the Toolkit in the cart.
   shopDomain: "shop.weand.me",
-  toolkitVariantId: "41600244121734",
+  toolkitVariantId: "68041242706054",   // "Connection Toolkit (Black Friday Deal)", unlisted (was 41600244121734, the regular listing)
   price: 197,
 
   // The value stack shown at the offer. "bonus: true" items show as workshop bonuses and expire,

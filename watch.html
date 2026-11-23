@@ -65,9 +65,8 @@
             <button type="button" data-rate="1" aria-pressed="true">1x</button><button type="button" data-rate="1.5" aria-pressed="false">1.5x</button><button type="button" data-rate="2" aria-pressed="false">2x</button>
           </div>
         </div>
-        <div class="early-row"><a class="early-kit wide buy-link" id="earlyKit" href="#" hidden>Get the kit on Chad’s desk</a></div>
         <div class="tuck" id="tuck" hidden>
-          <div class="tuck-head"><b>Your 7 learnings</b><span class="tuck-hint">Hover a card to read it</span><span class="tuck-count" id="tuckCount">0 of 7 unlocked</span></div>
+          <div class="tuck-head"><b>Your 7 learnings</b><span class="tuck-hint">Hover a card to read it</span><span class="tuck-count" id="tuckCount">0 of 7 unlocked</span><a class="early-kit wide buy-link" id="earlyKit" href="#" hidden>Get the kit on Chad’s desk</a></div>
           <div class="big-note" id="bigNote" hidden></div>
         </div>
       </div>
@@ -233,7 +232,12 @@
         <div><b>Connection Toolkit</b><span>Two decks, the roadmap, the book and playmeo access.</span></div>
         <div class="amt p">$197</div>
       </div>
-      <div class="d-live" id="drawerLive" hidden><span>Workshop bonuses disappear in</span><b data-count="bonus">40:00</b></div>
+      <div class="d-bf" id="drawerBF">
+        <img class="bf-stars" src="assets/green-stars.svg" alt="">
+        <span class="bf-kicker">This week only</span>
+        <span class="bf-big">Black Friday deal</span>
+        <span class="bf-sub">Every bonus below comes free with your kit</span>
+      </div>
       <div class="dbonus" id="drawerBonus"></div>
     </div>
     <footer>
@@ -248,8 +252,8 @@
 
   <div class="dstep" id="step2" hidden>
     <div class="body">
-      <span class="oto-tag">One time only: this offer won’t show again</span>
       <h3 class="oto-h">Or upgrade to every tool we make instead</h3>
+      <span class="oto-tag">One time only: this offer won’t show again</span>
       <img class="oto-img" id="otoImg" src="" alt="The Effortless Engagement Kit: every We and Me tool in one kit">
       <p class="oto-p">The <b>Effortless Engagement Kit</b> is every single tool we make packed into one kit. It includes a crash course in <b>The Contribution Method</b>, the exact framework Chad uses to design 100% of his engagements.</p>
       <ul class="oto-list">
@@ -261,7 +265,7 @@
       <p class="oto-small" id="otoValueNote"></p>
     </div>
     <footer>
-      <div class="total oto-total"><span>Upgrade instead</span><span class="oto-prices"><small>Valued at <s id="otoValue">$1,708</s></small><b id="otoPrice">$497</b></span></div>
+      <div class="total oto-total"><span>Upgrade instead</span><span class="oto-prices"><small hidden>Valued at <s id="otoValue">$1,708</s></small><b id="otoPrice">$497</b></span></div>
       <a class="btn green big" id="otoYes" href="#" target="_blank" rel="noopener">Yes, upgrade instead</a>
       <a class="nothanks" id="otoNo" href="#" target="_blank" rel="noopener">No thanks, just the Connection Toolkit for <span class="p">$197</span></a>
     </footer>
@@ -320,7 +324,6 @@
       $('nowLine').textContent = 'The workshop bonuses have expired. The Toolkit and masterclass are still';
       $('totalValue').textContent = money(total - bonusTotal); document.querySelectorAll('.tv').forEach(function(e){ e.textContent = money(total - bonusTotal); });
       if(revealed) $('winPill').textContent = 'Workshop bonuses have ended';
-      $('drawerLive').textContent = 'The workshop bonuses have expired.';
     }
     var side = '', drawer = '';
     C.stack.forEach(function(s){ if(!s.bonus) return; var live = on || s.keep;
@@ -414,6 +417,7 @@
     $('tuck').hidden = false; $('tuck').insertBefore($('notes'), big); document.body.classList.add('tucked');
     if(animate) $('tuck').classList.add('anim');
   }
+  tuck(false);   // the 7 learnings sit right under the play bar the whole time (Nov 23, 2026)
   function showBig(i){
     var n = $('note' + i), l = L[i]; if(!n.classList.contains('open')){ big.hidden = true; return; }
     big.className = 'big-note ' + l.color; big.innerHTML = '<small>' + l.title + '</small><p>' + l.text + '</p>' + (l.by ? '<em>' + l.by + '</em>' : ''); big.hidden = false; big.dataset.i = i;
@@ -438,15 +442,14 @@
 
   /* ----- the offer reveal ----- */
   var io = new IntersectionObserver(function(es){ es.forEach(function(e){ seenBuy = e.isIntersecting; }); syncSticky(); }, {threshold: [0, .05]});
-  // the bonus clock starts the first time a "Get the kit" button appears (0:24), not at the unboxing,
+  // the bonus clock starts the first time a "Get the kit" button appears (0:30), not at the unboxing,
   // so the 40 minutes run out about 25 minutes after the video ends (Chad, Nov 17, 2026)
   var bonusOn = false;
   function startBonus(){
     if(bonusOn || closed) return; bonusOn = true;
     if(!WS.bonusDeadline()) track('BonusClockStarted');
     WS.startBonusClock();
-    // the clock runs quietly from 0:24; it only shows inside the order panel until the 11:10 reveal
-    $('drawerLive').hidden = false;
+    // the clock runs quietly from 0:30 and only shows on the page from the 11:10 reveal (the order panel shows a Black Friday label instead)
     paintBonus(); WS.countdown('bonus', paintBonus);
   }
   function reveal(announce){
@@ -476,9 +479,9 @@
     $('lkGift').classList.toggle('done', maxT >= C.revealAtSeconds); $('lkGift').classList.toggle('cur', maxT < C.revealAtSeconds && (cur < 0 || L[cur].t > C.revealAtSeconds));
     $('noteCount').textContent = got + ' of ' + L.length + ' unlocked'; $('tuckCount').textContent = got + ' of ' + L.length + ' unlocked';
     $('cFill').style.width = Math.min(100, t / D * 100) + '%'; $('cBar').style.setProperty('--p', Math.min(100, t / D * 100) + '%'); $('cTime').textContent = mmss(t) + ' / ' + mmss(D);
-    var early = $('earlyKit'), showEarly = !revealed && maxT >= (C.earlyKitAtSeconds || 24);
+    var early = $('earlyKit'), showEarly = !revealed && maxT >= (C.earlyKitAtSeconds || 30);
     if(showEarly && early.hidden){ early.hidden = false; if(playing()) early.classList.add('anim'); }
-    if(maxT >= (C.earlyKitAtSeconds || 24)) startBonus();
+    if(maxT >= (C.earlyKitAtSeconds || 30)) startBonus();
     else if(!showEarly) early.hidden = true;
     if(maxT >= C.revealAtSeconds) reveal(playing());
     var pct = Math.round(maxT / (D - 5) * 100);
