@@ -65,7 +65,8 @@
 <script>
 (function(){
   var LS = WS.LS, $ = function(id){ return document.getElementById(id); };
-  if(!LS.get('ws_registered')) LS.set('ws_registered', String(Date.now()));   // someone landed here directly
+  // someone landed here directly (e.g. from an email), or their old one-hour window already ran out: give them a fresh hour
+  if(!LS.get('ws_registered') || WS.watchDeadline() <= Date.now()){ LS.set('ws_registered', String(Date.now())); LS.del('ws_window'); }
   var name = LS.get('ws_name');
   if(name) $('hi').textContent = 'You’re in, ' + name.slice(0, 24) + '.';
   var watchUrl = new URL('watch.html' + location.search, location.href).href;
