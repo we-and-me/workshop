@@ -852,3 +852,7 @@ html,body{max-width:100%;overflow-x:hidden}
 .note:not(.open) .front{visibility:hidden}
 .note.open .back{visibility:hidden}
 .player.tap-to-play::after{content:"Tap the video to play";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(17,17,17,.82);color:#fff;font:700 1rem/1 var(--body);padding:12px 18px;border-radius:999px;pointer-events:none;z-index:3;white-space:nowrap}
+/* v18: short screens (a phone on its side) must never get the height-based width cap, or the video shrinks to nothing */
+@media(max-height:600px){body:not(.revealed) .room{max-width:1000px!important}body:not(.revealed) .watch-head p{display:none}body:not(.revealed) .watch-head{padding-bottom:12px}}
+/* phone on its side: hide the title so the whole video fits the screen height */
+@media(max-height:600px) and (orientation:landscape){body:not(.revealed) .watch-head{display:none}.room,body:not(.revealed) .room{max-width:max(320px,calc((100vh - 84px) * 1.7778))!important}}
