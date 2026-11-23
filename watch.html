@@ -252,7 +252,7 @@
 
   <div class="dstep" id="step2" hidden>
     <div class="body">
-      <h3 class="oto-h">Or upgrade to every tool we make instead</h3>
+      <h3 class="oto-h">Upgrade to every tool we make instead.</h3>
       <span class="oto-tag">One time only: this offer won’t show again</span>
       <img class="oto-img" id="otoImg" src="" alt="The Effortless Engagement Kit: every We and Me tool in one kit">
       <p class="oto-p">The <b>Effortless Engagement Kit</b> is every single tool we make packed into one kit. It includes a crash course in <b>The Contribution Method</b>, the exact framework Chad uses to design 100% of his engagements.</p>
@@ -265,7 +265,7 @@
       <p class="oto-small" id="otoValueNote"></p>
     </div>
     <footer>
-      <div class="total oto-total"><span>Upgrade instead</span><span class="oto-prices"><small hidden>Valued at <s id="otoValue">$1,708</s></small><b id="otoPrice">$497</b></span></div>
+      <div class="total oto-total"><span>Upgrade instead</span><span class="oto-prices"><small>Valued at <s id="otoValue">$1,708</s></small><b id="otoPrice">$497</b></span></div>
       <a class="btn green big" id="otoYes" href="#" target="_blank" rel="noopener">Yes, upgrade instead</a>
       <a class="nothanks" id="otoNo" href="#" target="_blank" rel="noopener">No thanks, just the Connection Toolkit for <span class="p">$197</span></a>
     </footer>
@@ -356,7 +356,7 @@
   /* ----- order panel ----- */
   var seenBuy = false, revealed = false;
   function syncSticky(){ $('sticky').classList.toggle('show', revealed && !seenBuy && !(typeof playing === 'function' && playing()) && !$('drawer').classList.contains('open')); }
-  function step(n){ $('step1').hidden = n !== 1; $('step2').hidden = n !== 2; $('dTitle').textContent = n === 2 ? 'Before you check out' : 'Your order'; }
+  function step(n){ $('step1').hidden = n !== 1; $('step2').hidden = n !== 2; $('dTitle').textContent = n === 2 ? 'Want to go pro?' : 'Your order'; }
   function openDrawer(e){ if(e) e.preventDefault(); step(1); $('drawer').classList.add('open'); $('scrim').classList.add('open'); $('drawer').setAttribute('aria-hidden', 'false'); syncSticky(); track('AddToCart', {value: C.price, currency: 'USD', content_name: 'Connection Toolkit'}); }
   function closeDrawer(){ $('drawer').classList.remove('open'); $('scrim').classList.remove('open'); $('drawer').setAttribute('aria-hidden', 'true'); syncSticky(); }
   document.querySelectorAll('.buy-link').forEach(function(a){ a.addEventListener('click', openDrawer); });
