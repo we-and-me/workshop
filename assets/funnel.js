@@ -75,7 +75,7 @@
   function wall(el, list){
     el.innerHTML = list.map(function(t, i){
       var face = t.img ? '<img loading="lazy" src="' + P + t.img + '.jpg" alt="">' : '<span class="ini ' + ACC[i % 3] + '">' + esc(initials(t.n)) + '</span>';
-      return '<figure class="lv ' + ACC[i % 3] + '"><span class="h">' + HEART + '</span><p>' + esc(t.q) + '</p><figcaption>' + face + '<span><b>' + esc(t.n) + '</b>' + esc(t.r) + '</span></figcaption></figure>';
+      return '<div class="lvw"><figure class="lv ' + ACC[i % 3] + '"><span class="h">' + HEART + '</span><p>' + esc(t.q) + '</p><figcaption>' + face + '<span><b>' + esc(t.n) + '</b>' + esc(t.r) + '</span></figcaption></figure></div>';
     }).join('');
     if(!('IntersectionObserver' in window)) return;
     var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {rootMargin: '0px 0px -8% 0px'});

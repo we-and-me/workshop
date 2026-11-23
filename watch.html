@@ -114,7 +114,7 @@
           <span id="proofReviews"></span>
         </div>
       </div>
-      <p class="wp-logos">Chad has led these exercises with 100,000+ people at places like</p>
+      <p class="wp-logos">Chad’s methods are trusted across the world at places like</p>
       <div class="marquee" aria-label="Organizations Chad has worked with"><div class="track-m" id="logoTrack"></div></div>
       <div class="lovewall short" id="wallTop"></div>
       <div class="wforbes">
@@ -505,8 +505,11 @@
       events: { onReady: function(){ ready = true; started = true; $('poster').style.display = 'none'; track('VideoPlay');
                   if(qs.get('mute') === '1') player.mute();
                   try{ player.unloadModule('captions'); player.unloadModule('cc'); }catch(e){}
-                  player.setPlaybackRate(rate); player.playVideo(); syncCtrl(); },
-                onStateChange: function(e){ if(e.data === 1){ try{ player.unloadModule('captions'); }catch(x){} } if(e.data === 0) paint(D); syncCtrl(); syncSticky(); } } });
+                  player.setPlaybackRate(rate); player.playVideo(); syncCtrl();
+                  // iPhone/iPad Safari can refuse to start a video the page asks to play; if it hasn't started,
+                  // let the next tap reach YouTube's own player and say so
+                  setTimeout(function(){ if(!playing()){ $('shield').style.pointerEvents = 'none'; $('player').classList.add('tap-to-play'); track('TapToPlayShown'); } }, 1800); },
+                onStateChange: function(e){ if(e.data === 1){ try{ player.unloadModule('captions'); }catch(x){} $('shield').style.pointerEvents = ''; $('player').classList.remove('tap-to-play'); } if(e.data === 0) paint(D); syncCtrl(); syncSticky(); } } });
   };
   function playing(){ return ready && player.getPlayerState && player.getPlayerState() === 1; }
   function toggle(){ if(!ready) return load(lastT); playing() ? player.pauseVideo() : player.playVideo(); }

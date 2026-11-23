@@ -834,3 +834,21 @@ body:not(.revealed) .tuck-head{flex-wrap:nowrap;align-items:center}
 .d-bf{min-height:max-content;flex-shrink:0}
 .drawer .body{grid-auto-rows:max-content}
 .d-bf .bf-stars{right:12px;top:8px;width:28px}
+/* v17: Safari splits column cards and leaves stray shadows; keep cards whole, and lay the 3-card wall out as a plain grid */
+.lv{display:block;width:100%;-webkit-column-break-inside:avoid;page-break-inside:avoid;break-inside:avoid;transform:none!important;transition:opacity .7s ease!important}
+.lovewall.short{columns:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:start}
+.lovewall.short .lv{margin:0}
+@media(max-width:900px){.lovewall.short{grid-template-columns:1fr;max-width:560px;margin-left:auto;margin-right:auto}}
+/* v17: nothing may push the page wider than the screen (hidden kit tooltips did on phones) */
+html,body{max-width:100%;overflow-x:hidden}
+@supports (overflow:clip){html,body{overflow-x:clip}}
+.lvw{-webkit-column-break-inside:avoid;page-break-inside:avoid;break-inside:avoid;padding-bottom:18px}
+.lovewall .lv{margin:0}
+.lovewall.short .lvw{padding-bottom:0}
+@media(max-width:700px){body:not(.revealed) .watch-head{padding-bottom:12px}body:not(.revealed) .watch-head p{margin-top:4px;font-size:.95rem}}
+/* v17: Safari ignores backface-visibility when a parent clips (the tucked row), so it showed the answers mirrored.
+   Hide the face that should be away from the viewer, swapping at the half-way point of the flip. */
+.note .face{transition:visibility 0s linear .4s}
+.note:not(.open) .front{visibility:hidden}
+.note.open .back{visibility:hidden}
+.player.tap-to-play::after{content:"Tap the video to play";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:rgba(17,17,17,.82);color:#fff;font:700 1rem/1 var(--body);padding:12px 18px;border-radius:999px;pointer-events:none;z-index:3;white-space:nowrap}
