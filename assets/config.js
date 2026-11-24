@@ -71,7 +71,7 @@ window.WORKSHOP = {
   },
 
   // Tracking. Paste a Meta Pixel id to turn on ad tracking. Empty = off.
-  metaPixelId: "",
+  metaPixelId: "1835073093947388",   // the same We and Me pixel used on invite.weand.me
 
   // Seven learnings. Each one is a lock on the video bar at second t; its card flips once the video passes it.
   // The last two unlock during the unboxing (12:28 and 13:40), so people keep watching to the end.

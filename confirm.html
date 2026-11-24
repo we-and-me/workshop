@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=21">
+<link rel="stylesheet" href="assets/style.css?v=22">
 </head>
 <body>
 <div class="watch-bg" style="min-height:100vh">
@@ -62,8 +62,8 @@
   </footer>
 </div>
 
-<script src="assets/config.js?v=21"></script>
-<script src="assets/funnel.js?v=21"></script>
+<script src="assets/config.js?v=22"></script>
+<script src="assets/funnel.js?v=22"></script>
 <script>
 (function(){
   var C = window.WORKSHOP, LS = WS.LS, $ = function(id){ return document.getElementById(id); };
@@ -116,7 +116,8 @@
   when.addEventListener('change', function(){ var s = new Date(when.value); if(last && s > last){ when.value = local(last); build(); } });
   when.addEventListener('input', build); build();
   $('gcal').addEventListener('click', save); $('ics').addEventListener('click', save);
-  WS.track('CompleteRegistration');
+  // count each sign-up once, not every time this page is reloaded
+  if(LS.get('ws_cr') !== LS.get('ws_registered')){ LS.set('ws_cr', LS.get('ws_registered') || '1'); WS.track('CompleteRegistration'); }
 })();
 </script>
 </body>

@@ -14,6 +14,14 @@
       if(keepName) localStorage.setItem('ws_name', keepName); }catch(e){}
   }
 
+  // Meta Pixel: loads on every page when config.js has a metaPixelId (empty = off).
+  if(C.metaPixelId && !window.fbq){
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+    s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', C.metaPixelId); fbq('track', 'PageView');
+  }
+
   var STD = /^(Lead|CompleteRegistration|AddToCart|ViewContent|InitiateCheckout)$/;
   function track(name, data){ try{ (window.dataLayer = window.dataLayer || []).push(Object.assign({event:name}, data||{})); if(window.fbq) fbq(STD.test(name) ? 'track' : 'trackCustom', name, data||{}); }catch(e){} }
 
