@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20">
+<link rel="stylesheet" href="assets/style.css?v=21">
 </head>
 <body>
 <div class="watch-bg" style="min-height:100vh">
@@ -62,8 +62,8 @@
   </footer>
 </div>
 
-<script src="assets/config.js?v=20"></script>
-<script src="assets/funnel.js?v=20"></script>
+<script src="assets/config.js?v=21"></script>
+<script src="assets/funnel.js?v=21"></script>
 <script>
 (function(){
   var C = window.WORKSHOP, LS = WS.LS, $ = function(id){ return document.getElementById(id); };
@@ -77,7 +77,7 @@
 
   // their hour is already ticking (they clicked Start earlier, or a scheduled time arrived): show it live
   if(running()){ WS.countdown('watch'); $('winText').textContent = 'Your hour is already running. Jump back in before it closes.'; $('clockLabel').textContent = 'minutes left'; }
-  $('go').addEventListener('click', function(){ if(!running()){ LS.set('ws_window', String(Date.now())); } WS.track('StartClicked'); });
+  $('go').addEventListener('click', function(){ if(!running()){ LS.set('ws_window', String(Date.now())); ['ws_max','ws_pos','ws_revealed'].forEach(LS.del); } WS.track('StartClicked'); });
   $('notNow').addEventListener('click', function(e){ e.preventDefault(); $('later').scrollIntoView({behavior:'smooth', block:'center'}); });
   function paintWindow(){
     var start = parseInt(LS.get('ws_window') || '0', 10);

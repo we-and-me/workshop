@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20">
+<link rel="stylesheet" href="assets/style.css?v=21">
 </head>
 <body>
 <div class="watch-bg">
@@ -275,8 +275,8 @@
   </div>
 </aside>
 
-<script src="assets/config.js?v=20"></script>
-<script src="assets/funnel.js?v=20"></script>
+<script src="assets/config.js?v=21"></script>
+<script src="assets/funnel.js?v=21"></script>
 <script>
 (function(){
   var C = window.WORKSHOP, LS = WS.LS, qs = WS.qs, track = WS.track, $ = function(id){ return document.getElementById(id); };
@@ -302,7 +302,7 @@
     var used = LS.get('ws_replay') === '1'; $('closedOnce').hidden = used; $('closedDone').hidden = !used;
     track('WindowClosed');
   }
-  $('reopen').addEventListener('click', function(){ LS.set('ws_replay', '1'); LS.set('ws_window', String(Date.now())); location.reload(); });
+  $('reopen').addEventListener('click', function(){ LS.set('ws_replay', '1'); LS.set('ws_window', String(Date.now())); ['ws_max','ws_pos','ws_revealed'].forEach(LS.del); location.reload(); });
   if(!windowOpen()) showClosed();
   else WS.countdown('watch', function(){ if(!document.body.classList.contains('revealed')) $('winPill').textContent = started ? 'Window closed, finish watching' : 'Window closed'; if(!started) showClosed(); });
 
@@ -501,7 +501,8 @@
     [25, 50, 75, 100].forEach(function(m){ if(pct >= m && !marks[m]){ marks[m] = 1; if(!LS.get('ws_m' + m)){ LS.set('ws_m' + m, '1'); track('Video' + m); } } });
   }
   paintBonus();   // fills the order panel so the early "Get the kit" link shows the bonuses too
-  if(qs.get('reveal') === '1' || LS.get('ws_revealed') === '1') reveal(false);
+  // only bring the offer back on its own if this viewing has really passed the unboxing
+  if(qs.get('reveal') === '1' || (LS.get('ws_revealed') === '1' && maxT >= C.revealAtSeconds)) reveal(false);
   paint(lastT > 20 && lastT < D - 20 ? lastT : 0);
   if(lastT > 20 && lastT < D - 20) $('resume').textContent = 'Pick up where you left off, at ' + mmss(lastT);
   else lastT = 0;

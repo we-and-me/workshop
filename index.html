@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=20">
+<link rel="stylesheet" href="assets/style.css?v=21">
 </head>
 <body>
 
@@ -145,8 +145,8 @@
   <p>© We and Me, Inc. We’ll email you the link to the workshop and a few follow-up ideas. Unsubscribe any time.</p>
 </footer>
 
-<script src="assets/config.js?v=20"></script>
-<script src="assets/funnel.js?v=20"></script>
+<script src="assets/config.js?v=21"></script>
+<script src="assets/funnel.js?v=21"></script>
 <script>
 (function(){
   var C = window.WORKSHOP, form = document.getElementById('reg'), err = document.getElementById('err');
@@ -174,7 +174,7 @@
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)){ err.textContent = 'Please add a valid email.'; form.email.focus(); return; }
     err.textContent = '';
     var btn = form.querySelector('button'); btn.disabled = true; btn.firstChild.textContent = 'Saving your spot… ';
-    WS.LS.set('ws_name', fn); WS.LS.set('ws_registered', String(Date.now())); WS.LS.del('ws_window');
+    WS.LS.set('ws_name', fn); WS.LS.set('ws_registered', String(Date.now())); WS.LS.del('ws_window'); ['ws_max','ws_pos','ws_revealed'].forEach(WS.LS.del);
     WS.track('Lead');
     var go = function(){ location.href = 'confirm.html' + location.search.replace(/([?&])reset=1&?/, '$1').replace(/[?&]$/, ''); };
     if(C.kitFormId){
