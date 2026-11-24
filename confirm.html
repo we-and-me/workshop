@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=20">
 </head>
 <body>
 <div class="watch-bg" style="min-height:100vh">
@@ -17,7 +17,7 @@
     <div class="confirm">
       <div class="tick"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       <h1 id="hi">You’re in.</h1>
-      <p class="lede">Your workshop is ready. Press the button and it starts right away.</p>
+      <p class="lede">Your workshop is ready whenever you have 15 minutes.</p>
 
       <a class="btn big" id="go" href="watch.html">Start the workshop now
         <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -27,6 +27,7 @@
         <span><img src="assets/plain-green-Checkmark.svg" alt="">Sound on</span>
         <span><img src="assets/plain-green-Checkmark.svg" alt="">Nothing to prepare</span>
       </p>
+      <p class="notnow"><a href="#later" id="notNow">Don’t have 15 minutes free right now? Pick a better time.</a></p>
 
       <div class="duo">
       <div class="lpreview">
@@ -36,14 +37,14 @@
       </div>
 
       <div class="window" id="window">
-        <p id="winText">This workshop is only available to watch for the next hour.</p>
-        <div class="clock" aria-live="off"><span data-count="watch">60:00</span><small>minutes left</small></div>
+        <p id="winText"><span class="win-big">It only takes 15 minutes.</span> But like a live workshop, it won’t wait forever. Once you press Start, it closes in one hour.</p>
+        <div class="clock" aria-live="off"><span data-count="watch">60:00</span><small id="clockLabel">starts when you press Start</small></div>
       </div>
       </div>
 
-      <div class="later">
+      <div class="later" id="later">
         <h3>Not a good time right now?</h3>
-        <p>That’s okay. Pick a time where you do have 15 minutes. Your one-hour window will open then instead, and we’ll put it on your calendar.</p>
+        <p>That’s okay. Pick a time this week when you do have 15 minutes. Your one-hour window will open then instead, and we’ll put it on your calendar.</p>
         <div class="later-row">
           <label for="when" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">When do you want to watch?</label>
           <input id="when" type="datetime-local">
@@ -51,6 +52,7 @@
           <a class="btn ghost" id="ics" href="#" download="connection-before-content-workshop.ics">Apple or Outlook</a>
         </div>
         <p class="saved" id="saved" hidden></p>
+        <p class="later-note" id="laterNote">This workshop is only available through Tuesday, December 1.</p>
       </div>
     </div>
   </main>
@@ -60,25 +62,29 @@
   </footer>
 </div>
 
-<script src="assets/config.js"></script>
-<script src="assets/funnel.js"></script>
+<script src="assets/config.js?v=20"></script>
+<script src="assets/funnel.js?v=20"></script>
 <script>
 (function(){
-  var LS = WS.LS, $ = function(id){ return document.getElementById(id); };
-  // someone landed here directly (e.g. from an email), or their old one-hour window already ran out: give them a fresh hour
-  if(!LS.get('ws_registered') || WS.watchDeadline() <= Date.now()){ LS.set('ws_registered', String(Date.now())); LS.del('ws_window'); }
+  var C = window.WORKSHOP, LS = WS.LS, $ = function(id){ return document.getElementById(id); };
+  // the one hour now starts when they click Start, not when they land here
+  if(!LS.get('ws_registered')) LS.set('ws_registered', String(Date.now()));
+  function running(){ var s = parseInt(LS.get('ws_window') || '0', 10); return s && s <= Date.now() && WS.watchDeadline() > Date.now(); }
   var name = LS.get('ws_name');
   if(name) $('hi').textContent = 'You’re in, ' + name.slice(0, 24) + '.';
   var watchUrl = new URL('watch.html' + location.search, location.href).href;
   $('go').href = 'watch.html' + location.search;
 
-  WS.countdown('watch');
+  // their hour is already ticking (they clicked Start earlier, or a scheduled time arrived): show it live
+  if(running()){ WS.countdown('watch'); $('winText').textContent = 'Your hour is already running. Jump back in before it closes.'; $('clockLabel').textContent = 'minutes left'; }
+  $('go').addEventListener('click', function(){ if(!running()){ LS.set('ws_window', String(Date.now())); } WS.track('StartClicked'); });
+  $('notNow').addEventListener('click', function(e){ e.preventDefault(); $('later').scrollIntoView({behavior:'smooth', block:'center'}); });
   function paintWindow(){
     var start = parseInt(LS.get('ws_window') || '0', 10);
     if(start && start > Date.now()){
       $('winText').textContent = 'Your one-hour window opens ' + new Date(start).toLocaleString([], {weekday:'long', hour:'numeric', minute:'2-digit'}) + '.';
       document.querySelector('#window .clock').hidden = true;
-    } else { $('winText').textContent = 'This workshop is only available to watch for the next hour.'; document.querySelector('#window .clock').hidden = false; }
+    } else { document.querySelector('#window .clock').hidden = false; }
   }
   paintWindow();
 
@@ -86,10 +92,14 @@
   var d = new Date(); d.setDate(d.getDate() + 1); d.setHours(9, 0, 0, 0);
   function local(dt){ var p = function(n){ return ('0' + n).slice(-2); }; return dt.getFullYear() + '-' + p(dt.getMonth() + 1) + '-' + p(dt.getDate()) + 'T' + p(dt.getHours()) + ':' + p(dt.getMinutes()); }
   function utc(dt){ return dt.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); }
-  when.value = local(d); when.min = local(new Date());
+  // Black Friday week only: no picking a time after the deal ends
+  var last = C.dealEndsAt ? new Date(Date.parse(C.dealEndsAt) - 20 * 60000) : null;
+  if(last && d > last) d = new Date(Math.max(Date.now() + 5 * 60000, last.getTime()));
+  when.value = local(d); when.min = local(new Date()); if(last) when.max = local(last);
+  if(C.dealEndsLabel) $('laterNote').textContent = 'This workshop is only available through ' + C.dealEndsLabel + '.'; else $('laterNote').hidden = true;
   var title = 'Watch: Connection Before Content workshop (15 min)';
   var details = 'Your free workshop with Chad Littlefield. It’s open for one hour from this time. Press play here: ' + watchUrl;
-  function pick(){ var s = new Date(when.value); return isNaN(s) ? d : s; }
+  function pick(){ var s = new Date(when.value); if(isNaN(s)) return d; if(last && s > last) return last; return s; }
   function build(){
     var s = pick(), e = new Date(s.getTime() + 20 * 60000);
     $('gcal').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(title) + '&details=' + encodeURIComponent(details) + '&dates=' + utc(s) + '/' + utc(e);
@@ -103,6 +113,7 @@
     $('saved').hidden = false; $('saved').textContent = 'Saved. Your workshop will be open for one hour starting ' + s.toLocaleString([], {weekday:'long', month:'short', day:'numeric', hour:'numeric', minute:'2-digit'}) + '.';
     WS.track('ScheduledLater');
   }
+  when.addEventListener('change', function(){ var s = new Date(when.value); if(last && s > last){ when.value = local(last); build(); } });
   when.addEventListener('input', build); build();
   $('gcal').addEventListener('click', save); $('ics').addEventListener('click', save);
   WS.track('CompleteRegistration');

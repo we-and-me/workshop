@@ -9,12 +9,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/style.css?v=20">
 </head>
 <body>
 <div class="watch-bg">
   <div class="top" style="max-width:1280px">
-    <span class="pill"><i></i><span id="hello"><span class="long">Your workshop is live</span><span class="short">Live</span></span></span>
+    <span class="pill" id="livePill"><i></i><span id="hello"><span class="long">Your workshop is live</span><span class="short">Live</span></span></span>
     <span class="pill preview-tag" id="pvTag" hidden title="Drag the video bar to skip around">Preview mode</span>
     <span class="pill quiet" id="winPill">Open for <b data-count="watch">60:00</b> more</span>
   </div>
@@ -23,7 +23,7 @@
   <main class="wrap closed" id="closed" hidden>
     <div class="confirm">
       <h1>Your viewing window has closed.</h1>
-      <p class="lede">This workshop stays open for one hour after you sign up, so it gets watched instead of saved for someday.</p>
+      <p class="lede">Like a live workshop, it stays open for one hour after you press Start, so it gets watched instead of saved for someday.</p>
       <div id="closedOnce">
         <p style="margin-top:14px">If life got in the way, you can open it one more time. The hour starts when you press the button.</p>
         <button class="btn big" id="reopen" type="button" style="max-width:460px;margin:26px auto 0">Open one more viewing</button>
@@ -31,7 +31,9 @@
       <div id="closedDone" hidden>
         <p style="margin-top:14px">You’ve used your extra viewing. The Connection Toolkit is always available on our store.</p>
         <a class="btn big" href="https://shop.weand.me/products/connection-toolkit" style="max-width:460px;margin:26px auto 0">See the Connection Toolkit</a>
+        <p class="closed-again">Life got in the way? You can <a href="index.html">sign up again here</a> to get a fresh viewing.</p>
       </div>
+      <a href="https://shop.weand.me/products/connection-toolkit" aria-label="See the Connection Toolkit"><img class="closed-gif" src="assets/toolkit-product.webp" width="850" height="567" loading="lazy" alt="The Connection Toolkit opening up: question cards, Engage Cards, the Roadmap and two books"></a>
     </div>
   </main>
 
@@ -79,6 +81,7 @@
           <h3>The Connection Toolkit</h3>
           <p class="kc-sub">100+ ready to go group exercises in one box.</p>
           <p class="kc-easy">If it fits your work, here it is. If not, no worries. Enjoy the rest of the workshop.</p>
+          <div class="d-bf kc-bf"><img class="bf-stars" src="assets/green-stars.svg" alt=""><span class="bf-kicker">This week only</span><span class="bf-big">Black Friday deal</span><span class="bf-sub">Every bonus below comes free with your kit</span></div>
           <div class="kc-bonus">
             <b class="kc-lab">Free with your order from this workshop</b>
             <div id="kcBonus"></div>
@@ -198,7 +201,7 @@
         <details><summary>Do you ship internationally?</summary><p>Yes. About a quarter of our orders go outside the US. International shipping is $19.95 and usually takes 2 to 4 weeks, depending on your local postal service.</p></details>
         <details><summary>How fast will it arrive in the US?</summary><p>Orders usually ship within a day or two, and US shipping is free. You’ll get a tracking number by email as soon as it ships. If you need it for a specific event, order a little early.</p></details>
         <details><summary>We’re a school or nonprofit. Do we need tax paperwork?</summary><p>No. We cover the tax on our end to make it easy for the schools and nonprofits that use our tools. There’s no exemption form to send. Just order by card on our store.</p></details>
-        <details><summary>When do the workshop bonuses expire?</summary><p>40 minutes after the workshop starts, which gives you about 25 minutes after the video ends. The timer on this page is yours alone and it’s real. After it runs out, the Toolkit and masterclass are still $197 on our store, just without the free deck and the printables.</p></details>
+        <details><summary>When do the workshop bonuses expire?</summary><p>They’re part of our Black Friday deal, so they come with every order through Tuesday, December 1. After that, the Toolkit and masterclass are still $197 on our store, just without the free deck and the printables.</p></details>
         <details><summary>What if it isn’t a fit?</summary><p>We’ll refund your money. Period.</p></details>
       </div>
 
@@ -272,8 +275,8 @@
   </div>
 </aside>
 
-<script src="assets/config.js"></script>
-<script src="assets/funnel.js"></script>
+<script src="assets/config.js?v=20"></script>
+<script src="assets/funnel.js?v=20"></script>
 <script>
 (function(){
   var C = window.WORKSHOP, LS = WS.LS, qs = WS.qs, track = WS.track, $ = function(id){ return document.getElementById(id); };
@@ -294,6 +297,7 @@
   var closed = false, started = false;
   function showClosed(){
     closed = true; ['offer','sticky','winPill'].forEach(function(id){ $(id).style.display = 'none'; });
+    $('livePill').classList.add('ended'); $('hello').innerHTML = '<span class="long">Your workshop has ended</span><span class="short">Ended</span>';
     $('room').hidden = true; $('closed').hidden = false;
     var used = LS.get('ws_replay') === '1'; $('closedOnce').hidden = used; $('closedDone').hidden = !used;
     track('WindowClosed');
@@ -315,6 +319,7 @@
     '<div class="sbonus"><b class="kc-lab">Free with your order from this workshop</b>' + C.stack.filter(function(s){ return s.bonus; }).map(srow).join('') + '</div>';
   // before the offer appears the bonus clock hasn't started, so the bonuses count as available
   function bonusActive(){ var d = WS.bonusDeadline(); return !d || Date.now() < d; }
+  var dealPainted = false;
   function paintBonus(){
     var on = bonusActive(), expired = !!WS.bonusDeadline() && !on;
     document.body.classList.toggle('bonus-expired', expired);
@@ -324,6 +329,13 @@
       $('nowLine').textContent = 'The workshop bonuses have expired. The Toolkit and masterclass are still';
       $('totalValue').textContent = money(total - bonusTotal); document.querySelectorAll('.tv').forEach(function(e){ e.textContent = money(total - bonusTotal); });
       if(revealed) $('winPill').textContent = 'Workshop bonuses have ended';
+    } else if(C.dealEndsAt && !dealPainted){
+      // Black Friday: no 40 minute countdown, the bonuses ride along with the deal
+      dealPainted = true; var thru = 'through ' + C.dealEndsLabel;
+      $('kcExp').textContent = 'Part of our Black Friday deal, included with every order ' + thru + '.';
+      $('stackLive').textContent = 'Black Friday bonuses included ' + thru;
+      $('stickyLive').textContent = 'Black Friday bonuses included';
+      $('finalLive').textContent = 'Black Friday bonuses included ' + thru;
     }
     var side = '', drawer = '';
     C.stack.forEach(function(s){ if(!s.bonus) return; var live = on || s.keep;
@@ -456,7 +468,8 @@
     if(revealed || closed) return; revealed = true; LS.set('ws_revealed', '1');
     startBonus();
     // at the reveal the top-right timer switches from the viewing window to the bonus deadline
-    if(bonusActive()){ $('winPill').classList.add('bonus'); $('winPill').innerHTML = gift + 'Bonuses disappear in <b data-count="bonus">' + mmss(Math.max(0, WS.bonusDeadline() - Date.now()) / 1000) + '</b>'; }
+    if(bonusActive() && C.dealEndsAt){ $('winPill').classList.add('bonus'); $('winPill').innerHTML = gift + 'Black Friday bonuses included'; }
+    else if(bonusActive()){ $('winPill').classList.add('bonus'); $('winPill').innerHTML = gift + 'Bonuses disappear in <b data-count="bonus">' + mmss(Math.max(0, WS.bonusDeadline() - Date.now()) / 1000) + '</b>'; }
     else $('winPill').textContent = 'Workshop bonuses have ended';
     $('earlyKit').hidden = true;
     $('kitcard').classList.add('show'); $('offer').classList.add('show'); document.body.classList.add('has-sticky', 'revealed');

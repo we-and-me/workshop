@@ -18,6 +18,10 @@ window.WORKSHOP = {
   // The bonus clock starts when the first "Get the kit" button appears (0:30), so 40 minutes
   // ends about 25 minutes after the 15:09 video finishes.
   bonusWindowMinutes: 40,
+  // Black Friday: while this is set, the bonuses stay on for everyone until this moment (not the 40 minute
+  // clock), and the "pick a time" calendar only offers times up to it. Remove it to go back to the clock.
+  dealEndsAt: "2026-12-01T23:59:00-05:00",   // Tuesday, December 1, 11:59pm Eastern
+  dealEndsLabel: "Tuesday, December 1",
 
   // Kit (email). Paste the Kit form id here to start collecting sign-ups.
   // While this is empty the form works in preview mode: nothing is sent anywhere.

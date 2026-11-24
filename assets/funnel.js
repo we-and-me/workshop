@@ -22,7 +22,7 @@
     var start = parseInt(LS.get('ws_window') || LS.get('ws_registered') || '0', 10);
     return start ? start + C.watchWindowMinutes * 60000 : 0;
   }
-  function bonusDeadline(){ var t = parseInt(LS.get('ws_bonus_until') || '0', 10); return t || 0; }
+  function bonusDeadline(){ if(C.dealEndsAt) return Date.parse(C.dealEndsAt); var t = parseInt(LS.get('ws_bonus_until') || '0', 10); return t || 0; }
   function startBonusClock(){ if(!bonusDeadline()) LS.set('ws_bonus_until', String(Date.now() + C.bonusWindowMinutes * 60000)); return bonusDeadline(); }
   function clock(ms){ ms = Math.max(0, ms); var s = Math.floor(ms / 1000), m = Math.floor(s / 60); return m + ':' + ('0' + s % 60).slice(-2); }
   // paints every element with [data-count="watch"|"bonus"] each second; calls onEnd once at zero
