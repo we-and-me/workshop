@@ -887,3 +887,7 @@ html,body{max-width:100%;overflow-x:hidden}
 .securepay div{display:grid;gap:1px;line-height:1.3}
 .securepay b{font-size:.95rem;color:var(--ink,#3C3C3C)}
 .securepay span{font-size:.84rem}
+
+/* Black Friday: the deal ticket leads the sidebar card, the "kit I'm unboxing" pill steps aside (Nov 25, 2026) */
+body.deal-now .kc-live{display:none}
+body.deal-now .kitcard > .kc-bf:first-child{margin:0 0 16px}

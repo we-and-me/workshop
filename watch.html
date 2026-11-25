@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=23">
+<link rel="stylesheet" href="assets/style.css?v=24">
 </head>
 <body>
 <div class="watch-bg">
@@ -79,7 +79,7 @@
           <span class="kc-live"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M3 7.5h18V10H3zM12 7.5V20M12 7.5C10.5 4 7 4 7 6s3 1.5 5 1.5M12 7.5c1.5-3.5 5-3.5 5-1.5s-3 1.5-5 1.5"/></svg>The kit I’m unboxing</span>
           <img class="kc-img" src="https://cdn.shopify.com/s/files/1/0592/6151/7958/files/Connection_Toolkit_-_Main-opt.jpg?v=1744637377&width=700" alt="The Connection Toolkit">
           <h3>The Connection Toolkit</h3>
-          <p class="kc-sub">100+ ready to go group exercises in one box.</p>
+          <p class="kc-sub">100+ ready-to-go, no-prep group exercises in one box.</p>
           <p class="kc-easy" id="kcEasy">If it fits your work, here it is. If not, no worries. Enjoy the rest of the workshop.</p>
           <div class="d-bf kc-bf"><img class="bf-stars" src="assets/green-stars.svg" alt=""><span class="bf-kicker">This week only</span><span class="bf-big">Black Friday deal</span><span class="bf-sub">Every bonus below comes free with your kit</span></div>
           <div class="kc-bonus">
@@ -275,8 +275,8 @@
   </div>
 </aside>
 
-<script src="assets/config.js?v=23"></script>
-<script src="assets/funnel.js?v=23"></script>
+<script src="assets/config.js?v=24"></script>
+<script src="assets/funnel.js?v=24"></script>
 <script>
 (function(){
   var C = window.WORKSHOP, LS = WS.LS, qs = WS.qs, track = WS.track, $ = function(id){ return document.getElementById(id); };
@@ -504,7 +504,7 @@
   // only bring the offer back on its own if this viewing has really passed the unboxing
   // Black Friday: the deal shows from the very first second (config showDealFromStart)
   var DEAL_NOW = C.showDealFromStart && C.dealEndsAt && Date.now() < Date.parse(C.dealEndsAt);
-  if(DEAL_NOW){ document.body.classList.add('deal-now'); $('kcEasy').textContent = 'We paired our Black Friday deal with this free workshop. Watch first, or grab the deal now. Either way is great.'; }
+  if(DEAL_NOW){ document.body.classList.add('deal-now'); var kc = $('kitcard'); kc.insertBefore(kc.querySelector('.kc-bf'), kc.firstChild); var bon = C.stack.filter(function(x){ return x.bonus; }).reduce(function(a, x){ return a + x.value; }, 0); $('kcEasy').textContent = 'This week only, your kit comes with $' + bon.toLocaleString() + ' in free bonuses, including the full Connection Before Content masterclass.'; }
   if(DEAL_NOW || qs.get('reveal') === '1' || (LS.get('ws_revealed') === '1' && maxT >= C.revealAtSeconds)) reveal(false);
   // "Get the deal now" on the You're in page opens the order panel right away
   if(qs.get('order') === '1' && !closed) setTimeout(openDrawer, 400);
