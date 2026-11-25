@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=22">
+<link rel="stylesheet" href="assets/style.css?v=23">
 </head>
 <body>
 <div class="watch-bg">
@@ -80,7 +80,7 @@
           <img class="kc-img" src="https://cdn.shopify.com/s/files/1/0592/6151/7958/files/Connection_Toolkit_-_Main-opt.jpg?v=1744637377&width=700" alt="The Connection Toolkit">
           <h3>The Connection Toolkit</h3>
           <p class="kc-sub">100+ ready to go group exercises in one box.</p>
-          <p class="kc-easy">If it fits your work, here it is. If not, no worries. Enjoy the rest of the workshop.</p>
+          <p class="kc-easy" id="kcEasy">If it fits your work, here it is. If not, no worries. Enjoy the rest of the workshop.</p>
           <div class="d-bf kc-bf"><img class="bf-stars" src="assets/green-stars.svg" alt=""><span class="bf-kicker">This week only</span><span class="bf-big">Black Friday deal</span><span class="bf-sub">Every bonus below comes free with your kit</span></div>
           <div class="kc-bonus">
             <b class="kc-lab">Free with your order from this workshop</b>
@@ -154,7 +154,7 @@
           <a class="btn green big buy-link" href="#">Yes, send me the kit
             <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
-          <p class="fine" style="justify-content:center"><span><img src="assets/plain-green-Checkmark.svg" alt="">Secure checkout on shop.weand.me</span></p>
+          <div class="securepay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><div><b>Secure checkout, powered by Shopify</b><span>Apple Pay, Google Pay and all major credit cards</span></div></div>
           <div class="badges">
             <div class="badge blue"><img src="assets/guarantee.webp" alt=""><p><b>If you don’t like your toolkit, we’ll refund your money. Period.</b> This might be the only time we won’t ask questions.</p></div>
             <div class="badge green"><img src="assets/sustainable.png" alt=""><p><b>Your purchase is 100% carbon neutral.</b> Through our partnership with Mossy Earth, your order helps rewild and reforest the planet.</p></div>
@@ -275,8 +275,8 @@
   </div>
 </aside>
 
-<script src="assets/config.js?v=22"></script>
-<script src="assets/funnel.js?v=22"></script>
+<script src="assets/config.js?v=23"></script>
+<script src="assets/funnel.js?v=23"></script>
 <script>
 (function(){
   var C = window.WORKSHOP, LS = WS.LS, qs = WS.qs, track = WS.track, $ = function(id){ return document.getElementById(id); };
@@ -333,9 +333,9 @@
       // Black Friday: no 40 minute countdown, the bonuses ride along with the deal
       dealPainted = true; var thru = 'through ' + C.dealEndsLabel;
       $('kcExp').textContent = 'Part of our Black Friday deal, included with every order ' + thru + '.';
-      $('stackLive').textContent = 'Black Friday bonuses included ' + thru;
+      $('stackLive').textContent = 'Black Friday bonuses disappear forever ' + C.dealEndsLabel.replace(/^\w+day, /, '');
       $('stickyLive').textContent = 'Black Friday bonuses included';
-      $('finalLive').textContent = 'Black Friday bonuses included ' + thru;
+      $('finalLive').textContent = 'Black Friday bonuses disappear forever ' + C.dealEndsLabel.replace(/^\w+day, /, '');
     }
     var side = '', drawer = '';
     C.stack.forEach(function(s){ if(!s.bonus) return; var live = on || s.keep;
@@ -502,7 +502,12 @@
   }
   paintBonus();   // fills the order panel so the early "Get the kit" link shows the bonuses too
   // only bring the offer back on its own if this viewing has really passed the unboxing
-  if(qs.get('reveal') === '1' || (LS.get('ws_revealed') === '1' && maxT >= C.revealAtSeconds)) reveal(false);
+  // Black Friday: the deal shows from the very first second (config showDealFromStart)
+  var DEAL_NOW = C.showDealFromStart && C.dealEndsAt && Date.now() < Date.parse(C.dealEndsAt);
+  if(DEAL_NOW){ document.body.classList.add('deal-now'); $('kcEasy').textContent = 'We paired our Black Friday deal with this free workshop. Watch first, or grab the deal now. Either way is great.'; }
+  if(DEAL_NOW || qs.get('reveal') === '1' || (LS.get('ws_revealed') === '1' && maxT >= C.revealAtSeconds)) reveal(false);
+  // "Get the deal now" on the You're in page opens the order panel right away
+  if(qs.get('order') === '1' && !closed) setTimeout(openDrawer, 400);
   paint(lastT > 20 && lastT < D - 20 ? lastT : 0);
   if(lastT > 20 && lastT < D - 20) $('resume').textContent = 'Pick up where you left off, at ' + mmss(lastT);
   else lastT = 0;

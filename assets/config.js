@@ -22,6 +22,9 @@ window.WORKSHOP = {
   // clock), and the "pick a time" calendar only offers times up to it. Remove it to go back to the clock.
   dealEndsAt: "2026-12-01T23:59:00-05:00",   // Tuesday, December 1, 11:59pm Eastern
   dealEndsLabel: "Tuesday, December 1",
+  // Black Friday: show the kit card and the deal from the very first second (Chad, Nov 25, 2026).
+  // Set to false to go back to revealing it at revealAtSeconds. It switches itself off after dealEndsAt.
+  showDealFromStart: true,
 
   // Kit (email). Paste the Kit form id here to start collecting sign-ups.
   // While this is empty the form works in preview mode: nothing is sent anywhere.

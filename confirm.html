@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css?v=22">
+<link rel="stylesheet" href="assets/style.css?v=23">
 </head>
 <body>
 <div class="watch-bg" style="min-height:100vh">
@@ -28,6 +28,12 @@
         <span><img src="assets/plain-green-Checkmark.svg" alt="">Nothing to prepare</span>
       </p>
       <p class="notnow"><a href="#later" id="notNow">Don’t have 15 minutes free right now? Pick a better time.</a></p>
+
+      <a class="dealcard" id="dealcard" href="watch.html?order=1" hidden>
+        <img src="https://cdn.shopify.com/s/files/1/0592/6151/7958/files/Connection_Toolkit_-_Main-opt.jpg?v=1744637377&width=200" alt="">
+        <span class="dc-text"><b>Our first-ever Black Friday deal</b><span>Paired with this free workshop. Watching is optional.</span></span>
+        <span class="dc-go">See the deal now<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
 
       <div class="duo">
       <div class="lpreview">
@@ -62,8 +68,8 @@
   </footer>
 </div>
 
-<script src="assets/config.js?v=22"></script>
-<script src="assets/funnel.js?v=22"></script>
+<script src="assets/config.js?v=23"></script>
+<script src="assets/funnel.js?v=23"></script>
 <script>
 (function(){
   var C = window.WORKSHOP, LS = WS.LS, $ = function(id){ return document.getElementById(id); };
@@ -74,6 +80,13 @@
   if(name) $('hi').textContent = 'You’re in, ' + name.slice(0, 24) + '.';
   var watchUrl = new URL('watch.html' + location.search, location.href).href;
   $('go').href = 'watch.html' + location.search;
+  // Black Friday: preview the deal here too, with a way to skip straight to it
+  var dealOn = C.showDealFromStart && C.dealEndsAt && Date.now() < Date.parse(C.dealEndsAt);
+  if(dealOn){
+    $('dealcard').hidden = false;
+    $('dealcard').href = 'watch.html' + (location.search ? location.search + '&' : '?') + 'order=1';
+    $('dealcard').addEventListener('click', function(){ if(!running()){ LS.set('ws_window', String(Date.now())); ['ws_max','ws_pos','ws_revealed'].forEach(LS.del); } WS.track('DealClickedFromConfirm'); });
+  }
 
   // their hour is already ticking (they clicked Start earlier, or a scheduled time arrived): show it live
   if(running()){ WS.countdown('watch'); $('winText').textContent = 'Your hour is already running. Jump back in before it closes.'; $('clockLabel').textContent = 'minutes left'; }
