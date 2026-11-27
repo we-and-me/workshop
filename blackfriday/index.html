@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Black Friday: The Connection Toolkit</title>
+<meta name="description" content="Our first-ever Black Friday deal: the Connection Toolkit plus three free bonuses, through Tuesday, December 1.">
+<meta property="og:title" content="Our first-ever Black Friday deal">
+<meta property="og:description" content="The Connection Toolkit plus three free bonuses, through Tuesday, December 1.">
+<meta property="og:image" content="https://workshop.weand.me/email/bf-2026-a-2x.jpg">
+<link rel="icon" href="../assets/master-green-sm.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css?v=24">
+<style>
+/* Black Friday page only */
+.bf-top{background:#111;color:#fff;text-align:center;font-weight:700;font-size:.98rem;padding:10px 16px;line-height:1.35}
+.bf-top b{color:var(--green);font-variant-numeric:tabular-nums}
+.hero{background:linear-gradient(180deg,var(--sky) 0%,var(--pale-blue) 100%);padding:26px 0 56px}
+.hcard{background:#fff;border-radius:34px;padding:28px 34px;display:grid;grid-template-columns:.92fr 1.08fr;gap:34px;align-items:center;box-shadow:0 30px 60px -30px rgba(16,65,110,.7),0 0 0 3px #e3eaf1}
+.hcard .media img{width:100%;height:auto}
+.ticket{position:relative;display:grid;gap:4px;padding:18px 20px 16px;border-radius:20px;text-align:center;color:#fff;background:radial-gradient(120% 140% at 0% 0%,#2a2a2e 0%,#111 60%);box-shadow:0 12px 26px rgba(0,0,0,.22),inset 0 0 0 3px var(--green)}
+.ticket::before,.ticket::after{content:"";position:absolute;top:50%;width:26px;height:26px;margin-top:-13px;border-radius:50%;background:#fff}
+.ticket::before{left:-13px}.ticket::after{right:-13px}
+.ticket .k{justify-self:center;background:var(--green);color:#111;font-weight:700;font-size:.85rem;border-radius:999px;padding:4px 14px;margin-bottom:4px}
+.ticket .big{font-family:var(--head);font-weight:700;font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.05}
+.ticket .s{font-weight:700;color:#d7e9bf;font-size:.98rem}
+.ticket .st{position:absolute;right:16px;top:10px;width:30px}
+.hcard h1{margin-top:18px;font-size:clamp(1.9rem,3.4vw,2.5rem);white-space:nowrap}
+@media(max-width:480px){.hcard h1{white-space:normal}}
+.hcard .lede{margin-top:6px}
+.hplus{display:flex;align-items:center;gap:12px;margin-top:18px;padding:12px 16px;border:3px dashed var(--purple);background:var(--pale-purple);border-radius:16px;color:var(--ink);font-weight:500;text-decoration:none;line-height:1.3}
+.hplus b{color:var(--purple)}
+.hplus .pl{font-family:var(--head);font-weight:700;color:var(--purple);font-size:1.6rem;line-height:1}
+.hplus .see{margin-left:auto;white-space:nowrap;font-weight:700;color:var(--purple);font-size:.92rem}
+.hplus .see:after{content:" ↓"}
+.hplus:hover{background:#efe3f1}
+/* bonus breakdown */
+.bonuses{padding:64px 0 0}
+.bonuses .head{text-align:center;max-width:720px;margin:0 auto}
+.bonuses .head .sub{color:var(--purple)}
+.bonuses .head p.lede{margin-top:10px}
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:30px}
+.bcard{background:#fff;border:3px dashed var(--purple);border-radius:26px;padding:16px 16px 22px;display:flex;flex-direction:column}
+.bcard img{width:100%;height:auto;border-radius:18px}
+.bcard .val{align-self:flex-start;margin-top:14px;background:var(--purple);color:#fff;font-weight:700;font-size:.88rem;border-radius:999px;padding:4px 12px}
+.bcard h3{margin-top:10px;font-size:1.35rem}
+.bcard p{margin-top:8px;font-size:1rem;line-height:1.5}
+.btotal{margin:26px auto 0;max-width:560px;text-align:center}
+.btotal p{font-weight:700;color:var(--ink);margin-bottom:14px}
+.btotal p b{color:var(--purple)}
+@media(max-width:900px){.bgrid{grid-template-columns:1fr;max-width:460px;margin-left:auto;margin-right:auto}}
+.hbonus{margin-top:16px;border:3px dashed var(--purple);background:var(--pale-purple);border-radius:20px;padding:16px 18px}
+.hbonus .lab{display:block;color:var(--purple);font-weight:800;font-size:1.02rem;margin-bottom:10px}
+.it{display:grid;grid-template-columns:auto 52px 1fr auto;gap:12px;align-items:center;font-weight:700;color:var(--ink);line-height:1.25}
+.it+.it{margin-top:8px;padding-top:8px;border-top:2px dashed rgba(144,63,151,.28)}
+.it::before{content:"+";color:var(--purple);font-family:var(--head);font-size:1.5rem}
+.it img{width:52px;height:52px;border-radius:12px;object-fit:cover;background:#fff}
+.it em{font-style:normal;color:var(--purple);font-size:.92rem;white-space:nowrap}
+.hcard .price{display:flex;align-items:baseline;gap:14px;margin:16px 0 12px;flex-wrap:wrap}
+.hcard .price s{font-family:var(--head);font-weight:700;font-size:1.7rem;color:#8A8D94;text-decoration-color:var(--purple);text-decoration-thickness:3px}
+.hcard .price b{font-family:var(--head);font-size:clamp(3rem,6vw,3.9rem);color:var(--ink);line-height:1}
+.hcard .price span{font-weight:700;color:var(--green-dark)}
+.ends{text-align:center;font-weight:700;color:var(--purple);margin-top:12px;font-size:.98rem}
+.ends b{font-variant-numeric:tabular-nums}
+.hproof{margin-top:16px;padding-top:14px;border-top:2px solid var(--line);text-align:center}
+.hproof .rating{display:flex;justify-content:center;gap:3px}
+.hproof .rating svg{width:20px;height:20px;flex:none;fill:#F5B301}
+.hproof p{margin-top:6px;font-size:.92rem;line-height:1.35}
+.hproof b{color:var(--ink)}
+@media(max-width:900px){.hcard{grid-template-columns:1fr;padding:22px 18px;gap:20px;border-radius:26px}.hero{padding:22px 0 44px}.hcard .media{order:2;max-width:300px;margin:0 auto}}
+@media(max-width:480px){.it{grid-template-columns:auto 48px 1fr;gap:10px}.it img{width:48px;height:48px}.it em{grid-column:3;margin-top:-6px}}
+
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+.shots img{width:100%;height:auto;aspect-ratio:3/2;object-fit:cover;border-radius:22px;box-shadow:var(--shadow-sm)}
+@media(max-width:620px){.shots{gap:10px;margin-top:22px}.shots img{border-radius:14px}}
+.logos{padding:34px 0 10px;text-align:center}
+.logos p{font-weight:700;color:#6A6C73;font-size:.95rem}
+
+.fit{padding:56px 0 20px}
+.fit h2{text-align:center}
+.fit .sub{display:table;margin:0 auto}
+.qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.q{--ac:var(--blue);--tint:#EAF3FA;--hl:rgba(88,171,220,.24);background:#fff;border-radius:22px;padding:22px 22px 20px;border-top:4px solid var(--ac);box-shadow:0 1px 3px rgba(20,30,60,.06),0 10px 32px rgba(20,30,60,.11);display:flex;flex-direction:column}
+.q.g{--ac:var(--green-dark);--tint:#EFF6E5;--hl:rgba(140,198,64,.30)}
+.q.pu{--ac:var(--purple);--tint:#F5EDF6;--hl:rgba(144,63,151,.16)}
+.q .tag{align-self:flex-start;background:var(--tint);color:var(--ac);font-weight:800;font-size:.9rem;padding:4px 12px;border-radius:999px;margin-bottom:12px}
+.q .t{font-size:1.1rem;line-height:1.5;color:var(--ink);font-weight:500;flex:1}
+.q .hl{background:var(--hl);padding:0 .14em;margin:0 -.14em;border-radius:4px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.q .who{display:flex;align-items:center;gap:12px;margin-top:16px;font-size:.88rem;line-height:1.3}
+.q .who img{width:44px;height:44px;border-radius:50%;object-fit:cover;flex:none}
+.q .who b{display:block;color:var(--ink);font-size:.98rem}
+@media(max-width:900px){.qgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.qgrid{grid-template-columns:1fr}}
+
+.full{padding:56px 0 0}
+.full .stack-wrap{margin-top:26px}
+.sticky .btn{min-width:0}
+@media(max-width:600px){
+ .bf-top{font-size:.85rem;padding:8px 12px}.bf-top .lng{display:none}
+ .ticket{padding:12px 14px 11px;border-radius:16px}.ticket .big{font-size:1.6rem;white-space:nowrap}.ticket .s{font-size:.85rem}.ticket .k{font-size:.75rem;padding:3px 10px}.ticket .st{width:22px;right:12px;top:8px}
+ .ticket::before,.ticket::after{width:20px;height:20px;margin-top:-10px}.ticket::before{left:-10px}.ticket::after{right:-10px}
+ .hcard{grid-template-columns:minmax(0,1fr)}
+ .hcard h1{margin-top:14px;font-size:1.6rem;white-space:nowrap}.hcard .lede{font-size:1rem}
+ .hplus{margin-top:14px;padding:10px 12px;font-size:.95rem}.hplus .see{display:none}
+ .hbonus{padding:12px 12px;margin-top:12px}.hbonus .lab{font-size:.92rem;margin-bottom:6px}.it{font-size:.95rem}
+ .hcard .price{margin:12px 0 10px;flex-wrap:nowrap;flex-direction:row;gap:10px}.hcard .price span{font-size:.9rem}.hcard .btn.big{font-size:1.1rem;padding:17px 18px}.hcard .price b{font-size:2.7rem}.hcard .price s{font-size:1.4rem}
+}
+</style>
+</head>
+<body>
+
+<div class="bf-top"><span class="lng">Our first-ever </span>Black Friday deal ends Tuesday, December 1. <span id="topLeft"></span></div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hcard">
+      <div class="media"><img src="https://cdn.shopify.com/s/files/1/0592/6151/7958/files/Connection_Toolkit_-_Main-opt.jpg?v=1744637377&width=1200" width="1200" height="1200" alt="The Connection Toolkit box"></div>
+      <div>
+        <div class="ticket"><img class="st" src="../assets/green-stars.svg" alt=""><span class="k">This week only</span><span class="big">Black Friday deal</span><span class="s">Every bonus comes free with your kit</span></div>
+        <h1>The Connection Toolkit</h1>
+        <p class="lede">100+ ready-to-go, no-prep group exercises in one box.</p>
+        <div class="hbonus"><b class="lab">Free with your order this week</b><div id="heroBonus"></div></div>
+        <div class="price"><s class="tv">$972</s><b class="p">$197</b><span>Free US shipping</span></div>
+        <a class="btn green big buy-link" id="heroBuy" href="#">Get the Black Friday deal
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="ends" id="ends">Bonuses disappear forever December 1</p>
+        <div class="hproof"><span class="rating" role="img" aria-label="Five stars"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 6 6.5.8-4.8 4.5 1.2 6.5L12 17.3l-5.8 3.1 1.2-6.5L2.6 9.4l6.5-.8z"/></svg></span><p>Trusted by <b>100,000+</b> leaders, trainers, educators and facilitators in over 100 countries</p></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="logos" aria-label="Organizations Chad has worked with">
+  <div class="wrap"><p>Chad’s methods are trusted across the world at places like</p>
+  <div class="marquee"><div class="track-m" id="logoTrack"></div></div></div>
+</section>
+
+<section class="fit" aria-label="What people say">
+  <div class="wrap">
+    <p class="sub center">The wall of love</p>
+    <h2 style="margin-top:8px">Will it work with my group?</h2>
+    <div class="shots"><img src="../assets/bf/hands-cards.jpg" width="1200" height="800" loading="lazy" alt="Two people laughing while they trade We! Connect Cards"><img src="../assets/bf/table-cards.jpg" width="1200" height="800" loading="lazy" alt="We! Engage Cards laid out on a table during a group session"></div>
+    <div class="qgrid">
+      <div class="q"><span class="tag">Over cringey icebreakers?</span>
+        <p class="t">“I was over cutesy icebreakers… We! Connect Cards made my leadership training <span class="hl">more engaging and impactful.</span>”</p>
+        <div class="who"><img src="../assets/people/Donella_Tilery.jpg" alt=""><span><b>Donnella Tilery</b>HR &amp; Talent Development Consultant</span></div></div>
+      <div class="q g"><span class="tag">Been facilitating for decades?</span>
+        <p class="t">“I <span class="hl">never leave home without</span> a deck of We! Connect Cards.”</p>
+        <div class="who"><img src="../assets/people/Mark_Collard.jpg" alt=""><span><b>Mark Collard</b>Founder of playmeo</span></div></div>
+      <div class="q pu"><span class="tag">Leading senior leaders?</span>
+        <p class="t">“Chad’s toolkit helped a group of senior leaders <span class="hl">quickly open up</span> and have rich, meaningful conversations.”</p>
+        <div class="who"><img src="../assets/people/Alex_Morgan.jpg" alt=""><span><b>Alex Morgan</b>Leadership Facilitator</span></div></div>
+      <div class="q"><span class="tag">Team already knows each other?</span>
+        <p class="t">“One participant recently said, ‘I’ve worked with these people for 10+ years and <span class="hl">just learned more in this session than ever before!</span>’”</p>
+        <div class="who"><img src="../assets/people/Jared_Morrison.jpg" alt=""><span><b>Jared Morrison</b>Trainer &amp; Coach</span></div></div>
+      <div class="q g"><span class="tag">Room full of strangers?</span>
+        <p class="t">“<span class="hl">In just three minutes,</span> We! Connect Cards helped a group of strangers form a leadership support network.”</p>
+        <div class="who"><img src="../assets/people/Heather_Italiano.jpg" alt=""><span><b>Heather Italiano</b>Speaker &amp; Facilitator</span></div></div>
+      <div class="q pu"><span class="tag">Worried it’ll feel cheap?</span>
+        <p class="t">“They’re an easy way to warm up groups, and they <span class="hl">look and feel great in hand.</span>”</p>
+        <div class="who"><img src="../assets/people/Lindsay_Humber.jpg" alt=""><span><b>Lindsay Humber</b>Community Engagement Facilitator &amp; Consultant</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="bonuses" id="bonuses" aria-label="Your free Black Friday bonuses">
+  <div class="wrap">
+    <div class="head">
+      <p class="sub">Free with every order through December 1</p>
+      <h2 style="margin-top:8px">Your Black Friday bonuses</h2>
+      <p class="lede">Order the Connection Toolkit this week and these three come with it, free.</p>
+    </div>
+    <div class="bgrid">
+      <div class="bcard"><img src="../assets/bf/bonus-mc.jpg" width="700" height="700" loading="lazy" alt="The Connection Before Content Masterclass on a tablet">
+        <span class="val">A $697 value</span>
+        <h3>Connection Before Content Masterclass</h3>
+        <p>The full on-demand masterclass, yours to keep. Learn the science and research behind connection before content, so you can earn buy-in from the skeptics and critics in your group. Then see exactly how to use the strategies in your kit.</p></div>
+      <div class="bcard"><img src="../assets/bf/bonus-ff.jpg" width="700" height="700" loading="lazy" alt="A Future Focused We! Connect Cards deck">
+        <span class="val">A $39 value</span>
+        <h3>A Future Focused We! Connect Cards deck</h3>
+        <p>Our newest deck, added to your box. The questions help a group look ahead and talk about what they want next. It’s made for kickoffs, planning sessions and the start of a new year.</p></div>
+      <div class="bcard"><img src="../assets/bf/bonus-pp.jpg" width="700" height="700" loading="lazy" alt="Printable sheets of We! Connect Cards">
+        <span class="val">A $39 value</span>
+        <h3>The printable version of every card</h3>
+        <p>Print-ready files of every deck, emailed right after you order. Print extra sets for a big group, or leave a copy behind with a team so the conversations keep going after you leave.</p></div>
+    </div>
+    <div class="btotal">
+      <p>That’s <b id="bonusSum2">$775</b> in bonuses, free with your kit through Tuesday, December 1.</p>
+      <a class="btn green big buy-link" href="#">Get the Black Friday deal
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="full" aria-label="Everything you get">
+  <div class="wrap">
+    <div class="stack-wrap">
+      <div class="stack">
+        <div class="stack-head"><h3>Here’s everything you get</h3></div>
+        <div class="scol"><span>What you get</span><span>Valued at</span></div>
+        <div id="stackRows"></div>
+        <div class="stack-total"><span>Total value</span><s class="tv">$972</s></div>
+        <div class="now"><p>Through December 1, you get all this for</p><b class="p">$197</b></div>
+        <a class="btn green big buy-link" href="#">Yes, send me the kit
+          <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <div class="securepay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><div><b>Secure checkout, powered by Shopify</b><span>Apple Pay, Google Pay and all major credit cards</span></div></div>
+        <div class="badges">
+          <div class="badge blue"><img src="../assets/guarantee.webp" alt=""><p><b>If you don’t like your toolkit, we’ll refund your money. Period.</b> This might be the only time we won’t ask questions.</p></div>
+          <div class="badge green"><img src="../assets/sustainable.png" alt=""><p><b>Your purchase is 100% carbon neutral.</b> Through our partnership with Mossy Earth, your order helps rewild and reforest the planet.</p></div>
+        </div>
+        <p class="stack-live">Black Friday bonuses disappear forever December 1</p>
+      </div>
+    </div>
+
+    <div class="glance">
+      <h2>Effortless engagement at a glance</h2>
+      <div class="glance-row">
+        <div><img src="../assets/glance/g1.png" alt=""><p>No-prep, plug-and-play simplicity</p></div>
+        <div><img src="../assets/glance/g2.png" alt=""><p>100+ icebreaker and teambuilding strategies</p></div>
+        <div><img src="../assets/glance/g3.png" alt=""><p>Trusted by 100K leaders worldwide</p></div>
+        <div><img src="../assets/glance/g4.png" alt=""><p>Backed by research, proven in practice</p></div>
+        <div><img src="../assets/glance/g5.png" alt=""><p>Super premium quality, built to last</p></div>
+      </div>
+    </div>
+
+    <div class="chadline">
+      <img class="face" src="../assets/chad-headshot.webp" alt="Chad Littlefield">
+      <blockquote>“This is my life’s work packed into a box.”</blockquote>
+    </div>
+
+    <div class="center" style="margin-top:72px"><p class="sub">Good questions</p><h2 style="margin-top:10px">Before you decide</h2></div>
+    <div class="faq">
+      <details><summary>Will this work with a skeptical or quiet group?</summary><p>That’s who it was designed for. Everything in the kit is built on choice and small groups, so nobody is put on the spot in front of the whole room.</p></details>
+      <details><summary>Does it work for remote and hybrid teams?</summary><p>Yes. The nine strategies on the roadmap apply in person, remote and hybrid.</p></details>
+      <details><summary>How big can my group be?</summary><p>Chad has led the question swap with 30 executives in a workshop and with 6,000 people in an arena. For large groups, add extra decks.</p></details>
+      <details><summary>Is this for beginner or advanced facilitators?</summary><p>Both. It has super simple, powerful ways to use it on day one, like handing everyone a card and asking them to pair up. It also has advanced, creative uses for experienced facilitators who want to design whole sessions around connection.</p></details>
+      <details><summary>Do you ship internationally?</summary><p>Yes. About a quarter of our orders go outside the US. International shipping is $19.95 and usually takes 2 to 4 weeks, depending on your local postal service.</p></details>
+      <details><summary>How fast will it arrive in the US?</summary><p>Orders usually ship within a day or two, and US shipping is free. You’ll get a tracking number by email as soon as it ships. If you need it for a specific event, order a little early.</p></details>
+      <details><summary>We’re a school or nonprofit. Do we need tax paperwork?</summary><p>No. We cover the tax on our end to make it easy for the schools and nonprofits that use our tools. There’s no exemption form to send. Just order by card on our store.</p></details>
+      <details><summary>What if it isn’t a fit?</summary><p>We’ll refund your money. Period.</p></details>
+    </div>
+
+    <div class="center" style="margin:64px auto 0;max-width:520px">
+      <a class="btn green big buy-link" href="#">Get the Black Friday deal</a>
+      <p class="fine" style="justify-content:center">Black Friday bonuses disappear forever December 1</p>
+    </div>
+  </div>
+</section>
+
+<footer style="margin-top:72px">
+  <img class="url" src="../assets/url-blue.png" alt="www.weand.me">
+  <p>© We and Me, Inc.</p>
+</footer>
+
+<div class="sticky" id="sticky">
+  <div><b>Connection Toolkit, <s class="tv">$972</s> <span class="p">$197</span></b><span>Black Friday bonuses included</span></div>
+  <a class="btn green buy-link" href="#">Get the deal</a>
+</div>
+
+<!-- one-time upgrade, shown once before checkout -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="One-time upgrade" aria-hidden="true">
+  <header><h3>Want to go pro?</h3><button type="button" id="drawerX" aria-label="Close">×</button></header>
+  <div class="body">
+    <h3 class="oto-h">Upgrade to every tool we make instead.</h3>
+    <span class="oto-tag">One time only: this offer won’t show again</span>
+    <img class="oto-img" id="otoImg" src="" alt="The Effortless Engagement Kit: every We and Me tool in one kit">
+    <p class="oto-p">The <b>Effortless Engagement Kit</b> is every single tool we make packed into one kit. It includes a crash course in <b>The Contribution Method</b>, the exact framework Chad uses to design 100% of his engagements.</p>
+    <ul class="oto-list">
+      <li><img src="../assets/plain-green-Checkmark.svg" alt="">Cut your prep time in half</li>
+      <li><img src="../assets/plain-green-Checkmark.svg" alt="">Double the engagement in every group you lead</li>
+      <li><img src="../assets/plain-green-Checkmark.svg" alt="">Turn each engagement into at least two new opportunities</li>
+    </ul>
+    <p class="oto-small">Includes everything in the Connection Toolkit, plus Sticker Nametags, the Guided Journal, <i>How to Make Virtual Engagement Easy</i>, Future Focused cards, the printable card files, and both masterclasses.</p>
+    <p class="oto-small" id="otoValueNote"></p>
+  </div>
+  <footer>
+    <div class="total oto-total"><span>Upgrade instead</span><span class="oto-prices"><small>Valued at <s id="otoValue">$1,708</s></small><b id="otoPrice">$497</b></span></div>
+    <a class="btn green big" id="otoYes" href="#">Yes, upgrade instead</a>
+    <a class="nothanks" id="otoNo" href="#">No thanks, just the Connection Toolkit for <span class="p">$197</span></a>
+  </footer>
+</aside>
+
+<script src="../assets/config.js?v=24"></script>
+<script src="../assets/funnel.js?v=24"></script>
+<script>
+(function(){
+  var C = window.WORKSHOP, LS = WS.LS, qs = WS.qs, track = WS.track, $ = function(id){ return document.getElementById(id); };
+  function money(n){ return '$' + n.toLocaleString(); }
+  var END = Date.parse(C.dealEndsAt), dealOn = function(){ return Date.now() < END; };
+
+  /* prices and the value stack (all from config.js) */
+  var total = C.stack.reduce(function(a, s){ return a + s.value; }, 0);
+  document.querySelectorAll('.p').forEach(function(e){ e.textContent = money(C.price); });
+  document.querySelectorAll('.tv').forEach(function(e){ e.textContent = money(total); });
+  var bonuses = C.stack.filter(function(s){ return s.bonus; });
+  $('heroBonus').innerHTML = bonuses.map(function(s){ return '<div class="it"><img src="' + s.img + '" alt=""><span>' + s.title + '</span><em>' + money(s.value) + ' value</em></div>'; }).join('');
+  $('bonusSum2').textContent = money(bonuses.reduce(function(a, s){ return a + s.value; }, 0));
+  function srow(s){ return '<div class="srow' + (s.bonus && !s.keep ? ' bonus' : '') + '"><img src="' + s.img + '" alt="" loading="lazy"><div><b>' + s.title + '</b><span>' + s.detail + '</span></div><div class="val">' + money(s.value) + '</div></div>'; }
+  $('stackRows').innerHTML = C.stack.filter(function(s){ return !s.bonus; }).map(srow).join('') +
+    '<div class="sbonus"><b class="kc-lab">Free with your order through December 1</b>' + bonuses.map(srow).join('') + '</div>';
+
+  /* countdown to the end of the deal */
+  function left(){ var ms = Math.max(0, END - Date.now()), m = Math.floor(ms / 60000), d = Math.floor(m / 1440), h = Math.floor(m % 1440 / 60);
+    return (d ? d + (d === 1 ? ' day, ' : ' days, ') : '') + h + (h === 1 ? ' hour' : ' hours') + (d ? '' : ', ' + (m % 60) + ' min'); }
+  function tick(){
+    if(dealOn()){ $('ends').innerHTML = 'Bonuses disappear forever in <b>' + left() + '</b>'; $('topLeft').innerHTML = '<b>' + left() + '</b> left.'; }
+    else { $('ends').textContent = 'The Black Friday bonuses have ended.'; $('topLeft').textContent = ''; }
+  }
+  tick(); setInterval(tick, 30000);
+
+  /* logos */
+  var logos = [['jetblue.png','JetBlue'],['google-new.png','Google'],['starbucks.png','Starbucks'],['jnj.png','Johnson and Johnson'],['cigna.png','Cigna'],['notre-dame.png','Notre Dame'],['usda-new.png','USDA'],['pennstate.png','Penn State'],['tedx.png','TEDx'],['carnegie-new.png','Carnegie'],['goodwill.png','Goodwill'],['asu.png','Arizona State University'],['george-mason.png','George Mason University'],['indiana.png','Indiana University'],['embry-riddle.png','Embry-Riddle'],['wisconsin.png','University of Wisconsin'],['conscious-capitalism.png','Conscious Capitalism']];
+  var lh = logos.map(function(l){ return '<img src="../assets/logos/' + l[0] + '" alt="' + l[1] + '">'; }).join('');
+  $('logoTrack').innerHTML = '<div>' + lh + '</div><div aria-hidden="true">' + lh + '</div>';
+
+  /* checkout: Shopify cart links go straight to checkout */
+  function link(items, code){
+    var p = new URLSearchParams(); p.set('ref', 'blackfriday'); p.set('attributes[source]', 'workshop.weand.me/blackfriday');
+    if(code) p.set('discount', code);
+    qs.forEach(function(v, k){ if(/^utm_/.test(k)) p.set(k, v); });
+    return 'https://' + C.shopDomain + '/cart/' + items + '?' + p.toString();
+  }
+  var on = dealOn();
+  var toolkitUrl = link(C.toolkitVariantId + ':1' + (on && C.bonusVariantId ? ',' + C.bonusVariantId + ':1' : ''), on ? C.bonusDiscountCode : '');
+  var otoUrl = link(C.oto.variantId + ':1', C.oto.discountCode);
+  $('otoNo').href = toolkitUrl; $('otoYes').href = otoUrl;
+  $('otoImg').src = C.oto.img; $('otoPrice').textContent = money(C.oto.price);
+  if(C.oto.valuedAt){ $('otoValue').textContent = money(C.oto.valuedAt); $('otoValueNote').textContent = C.oto.valueNote || ''; } else $('otoValue').parentNode.hidden = true;
+
+  function openOto(){ $('drawer').classList.add('open'); $('scrim').classList.add('open'); $('drawer').setAttribute('aria-hidden', 'false'); track('UpsellViewed'); }
+  function closeOto(){ $('drawer').classList.remove('open'); $('scrim').classList.remove('open'); $('drawer').setAttribute('aria-hidden', 'true'); }
+  document.querySelectorAll('.buy-link').forEach(function(a){
+    a.href = toolkitUrl;
+    a.addEventListener('click', function(e){
+      track('AddToCart', {value: C.price, currency: 'USD', content_name: 'Connection Toolkit'});
+      if(C.oto.show && LS.get('ws_oto_seen') !== '1'){ e.preventDefault(); LS.set('ws_oto_seen', '1'); openOto(); }
+      else track('InitiateCheckout', {value: C.price, currency: 'USD'});
+    });
+  });
+  $('drawerX').addEventListener('click', closeOto); $('scrim').addEventListener('click', closeOto);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeOto(); });
+  $('otoYes').addEventListener('click', function(){ track('UpsellAccepted', {value: C.oto.price}); track('InitiateCheckout', {value: C.oto.price, currency: 'USD'}); });
+  $('otoNo').addEventListener('click', function(){ track('UpsellDeclined'); track('InitiateCheckout', {value: C.price, currency: 'USD'}); });
+
+  /* sticky bar once the main button scrolls away */
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){ $('sticky').classList.toggle('show', !es[0].isIntersecting && es[0].boundingClientRect.top < 0); }).observe($('heroBuy'));
+  }
+  if(qs.get('reset') === '1') LS.del('ws_oto_seen');
+  track('ViewContent', {content_name: 'Black Friday page', value: C.price, currency: 'USD'});
+})();
+</script>
+</body>
+</html>
